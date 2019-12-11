@@ -10,6 +10,7 @@ public class FoodNode extends CellLocatedNode {
     public static final int MAX_QUANTITY = 10;
     public static final int MIN_QUANTITY = 10;
     private int quantity;
+    private int lifetime = 1000;
 
     public FoodNode(){
         super();
@@ -24,7 +25,12 @@ public class FoodNode extends CellLocatedNode {
 
     @Override
     public void onPostClock() {
+
         super.onPostClock();
+        lifetime --;
+        if (lifetime <= 0){
+            die();
+        }
     }
 
     public void setQuantity(int quantity) {
