@@ -16,6 +16,7 @@ public class AntNode extends CellLocatedNode {
     @Override
     public void onStart() {
         super.onStart();
+        setLocation(currentCell);
     }
 
     @Override
@@ -29,21 +30,44 @@ public class AntNode extends CellLocatedNode {
     protected void antAlgorithm() {
         // TODO replace by your implementation
         Cell cell = pickNeighBoringCell();
-        setDirection(cell);
-        setCurrentCell(cell);
-
-        setLocation(currentCell);
+        addDestination(cell);
     }
 
     protected Cell pickNeighBoringCell() {
         Cell nextCell = null;
         Random random = new Random();
+        while(nextCell == null){
+            if(random.nextBoolean()){
+                if(random.nextBoolean()){
+                    if(random.nextBoolean()){
+                        nextCell = getCurrentCell().getBottomLeftNeighbor();
+                    } else {
+                        nextCell = getCurrentCell().getLeftNeighbor();
+                    }
+                } else {
+                    if(random.nextBoolean()){
+                        nextCell = getCurrentCell().getTopLeftNeighbor();
+                    } else {
+                        nextCell = getCurrentCell().getTopNeighbor();
+                    }
+                }
+            } else {
+                if(random.nextBoolean()){
+                    if(random.nextBoolean()){
+                        nextCell = getCurrentCell().getTopRightNeighbor();
+                    } else {
+                        nextCell = getCurrentCell().getRightNeighbor();
+                    }
+                } else {
+                    if(random.nextBoolean()){
+                        nextCell = getCurrentCell().getBottomRightNeighbor();
+                    } else {
+                        nextCell = getCurrentCell().getBottomNeighbor();
+                    }
+                }
 
-        while(nextCell == null)
-            if(random.nextBoolean())
-                nextCell = getCurrentCell().getRightNeighbor();
-            else
-                nextCell = getCurrentCell().getLeftNeighbor();
+            }
+        }
 
         return nextCell;
     }

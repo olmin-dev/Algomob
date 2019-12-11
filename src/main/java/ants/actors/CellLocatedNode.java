@@ -3,7 +3,7 @@ package ants.actors;
 import ants.environment.Cell;
 import io.jbotsim.core.Node;
 
-public class CellLocatedNode extends Node {
+public class CellLocatedNode extends WayPointNode {
 
     protected Cell currentCell = null;
 
