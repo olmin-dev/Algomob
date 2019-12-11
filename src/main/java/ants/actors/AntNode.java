@@ -27,10 +27,20 @@ public class AntNode extends CellLocatedNode {
 
     }
 
+    @Override
+    public void onArrival() {
+        Cell a = (Cell) getDestinations().element();
+        setCurrentCell(a);
+        System.out.println(currentCell);
+        super.onArrival();
+
+    }
+
     protected void antAlgorithm() {
-        // TODO replace by your implementation
-        Cell cell = pickNeighBoringCell();
-        addDestination(cell);
+        if(getDestinations().isEmpty() || currentCell != getDestinations().element()) {
+            Cell cell = pickNeighBoringCell();
+            addDestination(cell);
+        }
     }
 
     protected Cell pickNeighBoringCell() {
