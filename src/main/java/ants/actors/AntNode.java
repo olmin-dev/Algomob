@@ -7,6 +7,7 @@ import io.jbotsim.core.Node;
 import java.util.Random;
 
 public class AntNode extends CellLocatedNode {
+    private int lifetime = 1000;
 
     public AntNode(){
         super();
@@ -22,7 +23,10 @@ public class AntNode extends CellLocatedNode {
     @Override
     public void onClock() {
         super.onClock();
-
+        lifetime --;
+        if (lifetime <= 0){
+            die();
+        }
         antAlgorithm();
 
     }
