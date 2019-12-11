@@ -34,10 +34,10 @@ public class QueenNode extends CellLocatedNode {
     }
 
     public void produceOffspring(){
+        foodStock--;
+
         if(foodStock <= 0)
             return;
-
-        foodStock--;
 
         AntNode babyAnt = new AntNode();
         babyAnt.setCurrentCell(getCurrentCell());
