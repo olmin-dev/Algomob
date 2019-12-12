@@ -9,6 +9,10 @@ public class QueenNode extends CellLocatedNode {
 
     private int foodStock;
 
+    public void increaseFoodStock(){
+        foodStock++;
+    }
+
     public QueenNode(){
         super();
         foodStock = 10;
@@ -25,6 +29,13 @@ public class QueenNode extends CellLocatedNode {
     }
 
     @Override
+    public void onStart(){
+        super.onStart();
+        onSensingIn(this);
+        setSensingRange(45);
+    }
+
+    @Override
     public void onPostClock() {
         super.onPostClock();
     }
@@ -36,8 +47,10 @@ public class QueenNode extends CellLocatedNode {
     public void produceOffspring(){
         foodStock--;
 
-        if(foodStock <= 0)
+        if(foodStock <= 0) {
+            die();
             return;
+        }
 
         AntNode babyAnt = new AntNode();
         babyAnt.setCurrentCell(getCurrentCell());

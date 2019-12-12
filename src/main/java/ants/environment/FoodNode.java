@@ -33,6 +33,13 @@ public class FoodNode extends CellLocatedNode {
         }
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+        onSensingIn(this);
+        setSensingRange(45);
+    }
+
     public void setQuantity(int quantity) {
         this.quantity = quantity;
         if (quantity <= 0)
@@ -42,6 +49,13 @@ public class FoodNode extends CellLocatedNode {
 
     public int getQuantity(){
         return quantity;
+    }
+
+    public void decreaseQuantity(){
+        quantity--;
+        if(quantity == 0){
+            die();
+        }
     }
 
 }

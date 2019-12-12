@@ -1,13 +1,18 @@
 package ants.actors;
 
 import ants.environment.Cell;
+import ants.environment.FoodNode;
 import io.jbotsim.core.Color;
 import io.jbotsim.core.Node;
+import io.jbotsim.core.Point;
 
+import java.util.List;
 import java.util.Random;
 
 public class AntNode extends CellLocatedNode {
     private int lifetime = 1000;
+    private boolean arrived = true;
+    private boolean carry = false;
 
     public AntNode(){
         super();
@@ -18,6 +23,8 @@ public class AntNode extends CellLocatedNode {
     public void onStart() {
         super.onStart();
         setLocation(currentCell);
+        onSensingIn(this);
+        setSensingRange(45);
     }
 
     @Override
@@ -28,13 +35,26 @@ public class AntNode extends CellLocatedNode {
             die();
         }
         antAlgorithm();
+    }
 
+    @Override
+    public void onArrival() {
+        arrived = true;
+        setCurrentCell((Cell) getDestinations().element());
+        super.onArrival();
     }
 
     protected void antAlgorithm() {
-        // TODO replace by your implementation
-        Cell cell = pickNeighBoringCell();
-        addDestination(cell);
+        if(arrived) {
+            Cell cell = pickNeighBoringCell();
+            addDestination(cell);
+            arrived = false;
+        }
+        if(!carry){
+            takeFood();
+        } else {
+            dropFood();
+        }
     }
 
     protected Cell pickNeighBoringCell() {
@@ -76,11 +96,31 @@ public class AntNode extends CellLocatedNode {
         return nextCell;
     }
     public void takeFood() {
-        // TODO
+        List<Node>  Nb = getSensedNodes();
+        for(int i = 0; i < Nb.size(); i++){
+            Node currentNb = Nb.get(i);
+            if(currentNb.getIcon() == "/images/ant-worm.png" && distance(currentNb) < 10){
+                System.out.println("Miam miam pour la reine !");
+                FoodNode queen = (FoodNode) currentNb;
+                queen.decreaseQuantity();
+                carry = true;
+                return;
+            }
+        }
     }
 
     public void dropFood() {
-        // TODO
+        List<Node>  Nb = getSensedNodes();
+        for(int i = 0; i < Nb.size(); i++){
+            Node currentNb = Nb.get(i);
+            if(currentNb.getIcon() == "/images/ant-queen.png" && distance(currentNb) < 10){
+                System.out.println("Oh ma reine !");
+                QueenNode queen = (QueenNode) currentNb;
+                queen.increaseFoodStock();
+                carry = false;
+                return;
+            }
+        }
     }
 
 }
