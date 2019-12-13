@@ -31,7 +31,12 @@ public class Cell extends Point {
 
     public Cell(Point location){
         super(location);
-        cost = new Random().nextInt(MAX_COST_VALUE - MIN_COST_VALUE+1) + MIN_COST_VALUE+1;
+        Random r = new Random();
+        int alt_multiplifier = (int) (Math.floor(location.y)/20);
+        cost = (int) (r.nextGaussian() * 10 ) + alt_multiplifier;
+        if (cost < 1){
+            cost = 1;
+        }
         PV = cost * 20;
     }
 
