@@ -11,11 +11,12 @@ public class QueenNode extends CellLocatedNode {
 
     public void increaseFoodStock(){
         foodStock++;
+        System.out.println("Merci mon fidèle sujet");
     }
 
     public QueenNode(){
         super();
-        foodStock = 10;
+        foodStock = 100;
         setIcon("/images/ant-queen.png");
         setIconSize(getIconSize()*2);
     }

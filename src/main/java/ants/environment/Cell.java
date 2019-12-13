@@ -12,12 +12,27 @@ public class Cell extends Point {
     public static final int MIN_COST_VALUE = 1;
     private int cost;
 
+    private int PV;
+
+    public int getPV() {
+        return PV;
+    }
+
+    public void setPV(int PV) {
+        this.PV = PV;
+    }
+
+    public synchronized void decreasePv(){
+        this.PV--;
+    }
+
     Map<Integer, Cell> neighBor = new HashMap<>();
 
 
     public Cell(Point location){
         super(location);
         cost = new Random().nextInt(MAX_COST_VALUE - MIN_COST_VALUE+1) + MIN_COST_VALUE+1;
+        PV = cost * 20;
     }
 
     public Cell getNeighBor(int index) {
