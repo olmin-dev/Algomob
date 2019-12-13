@@ -50,7 +50,7 @@ public class AntHillMain {
 
         queen = new QueenNode();
 
-        Cell queenCell = environment.getRandomLocation();
+        Cell queenCell = environment.getRandomLocationGauss(1/3,10);
         queen.setCurrentCell(queenCell);
         queen.setLocation(queenCell);
 
