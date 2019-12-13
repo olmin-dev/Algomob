@@ -98,4 +98,17 @@ public class Cell extends Point {
         if(cost < MIN_COST_VALUE)
             cost = MIN_COST_VALUE;
     }
+
+    public Cell getLocation(Point current){
+        if(current == (Point) this) return this;
+        if(current == (Point) this.getBottomNeighbor()) return this.getBottomNeighbor();
+        if(current == (Point) this.getBottomLeftNeighbor()) return this.getBottomLeftNeighbor();
+        if(current == (Point) this.getLeftNeighbor()) return this.getLeftNeighbor();
+        if(current == (Point) this.getTopLeftNeighbor()) return this.getTopLeftNeighbor();
+        if(current == (Point) this.getTopNeighbor()) return this.getTopNeighbor();
+        if(current == (Point) this.getTopRightNeighbor()) return this.getTopRightNeighbor();
+        if(current == (Point) this.getRightNeighbor()) return this.getRightNeighbor();
+        if(current == (Point) this.getBottomRightNeighbor()) return this.getBottomRightNeighbor();
+        return new Cell(new Point(-1,-1));
+    }
 }

@@ -30,8 +30,8 @@ public class AntNode extends CellLocatedNode {
 
     @Override
     public void onClock() {
-        super.onClock();
         if(dig == 1000) {
+            super.onClock();
             lifetime--;
             if (lifetime <= 0) {
                 die();
@@ -40,7 +40,8 @@ public class AntNode extends CellLocatedNode {
         } else {
             if(dig == 0){
                 dig = 1000;
-                currentCell.setCost(Cell.MIN_COST_VALUE);
+                currentCell.getLocation(getDestinations().element()).setCost(Cell.MIN_COST_VALUE);
+                super.onClock();
             } else {
                 dig--;
             }
