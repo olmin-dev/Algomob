@@ -42,7 +42,6 @@ public class AntNode extends CellLocatedNode {
                 dig = 1000;
                 currentCell.setCost(Cell.MIN_COST_VALUE);
             } else {
-                System.out.println("I'm a dwarf and i'm digging a hole ! diggy diggy hole diggy diggy hole" + dig);
                 dig--;
             }
         }
@@ -103,8 +102,9 @@ public class AntNode extends CellLocatedNode {
 
             }
         }
-        dig--;
-
+        if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
+            dig--;
+        }
         return nextCell;
     }
     public void takeFood() {
