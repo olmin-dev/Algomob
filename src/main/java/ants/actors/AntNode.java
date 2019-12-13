@@ -16,6 +16,7 @@ public class AntNode extends CellLocatedNode {
     private Cell diggingCell;
     private boolean isDigging = false;
     private Cell startCell;
+    private boolean isSearchingQueen;
 
     public AntNode(){
         super();
@@ -78,6 +79,21 @@ public class AntNode extends CellLocatedNode {
         super.onArrival();
     }
 
+    public void searchQueen(){
+        List<Node>  Nb = getSensedNodes();
+        for(int i = 0; i < Nb.size(); i++){
+            Node currentNb = Nb.get(i);
+            if(currentNb.getIcon() == "/images/ant-queen.png"){
+                if( distance(currentNb) < 10){
+                    dropFood(currentNb);
+                } else {
+                    addDestination(currentNb.getLocation());
+                    arrived = false;
+                }
+            }
+        }
+    }
+
     protected void antAlgorithm() {
         if(arrived) {
             Cell cell = pickNeighBoringCell();
@@ -87,18 +103,7 @@ public class AntNode extends CellLocatedNode {
         if(!carry){
             takeFood();
         } else {
-            List<Node>  Nb = getSensedNodes();
-            for(int i = 0; i < Nb.size(); i++){
-                Node currentNb = Nb.get(i);
-                if(currentNb.getIcon() == "/images/ant-queen.png"){
-                    if( distance(currentNb) < 10){
-                        dropFood(currentNb);
-                    } else {
-                        addDestination(currentNb.getLocation());
-                        arrived = false;
-                    }
-                }
-            }
+            searchQueen();
         }
     }
 
