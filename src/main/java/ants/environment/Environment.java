@@ -120,6 +120,20 @@ public class Environment {
         return getElement(locationRandom.nextInt(nbColumn-2)+1, locationRandom.nextInt(nbRow-2)+1);
     }
 
+    public Cell getRandomLocationFood() {
+        Random r = new Random();
+        int moy = (nbRow - 2) * 3 / 4;
+        int deriv = 8;
+        int val = (int) Math.round(r.nextGaussian() * deriv) + moy;
+        if (val > nbRow - 2) {
+            val = nbRow - 2;
+        }
+        if (val < 1){
+            val = 1;
+        }
+        return getElement(locationRandom.nextInt(nbColumn-2)+1, val);
+    }
+
     public int getNbColumn() {
         return nbColumn;
     }

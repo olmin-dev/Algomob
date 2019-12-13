@@ -1,12 +1,19 @@
 package ants.actors;
 
 import ants.environment.Cell;
+import ants.environment.FoodNode;
 import io.jbotsim.core.Color;
 import io.jbotsim.core.Node;
+import io.jbotsim.core.Point;
 
+import java.util.List;
 import java.util.Random;
 
 public class AntNode extends CellLocatedNode {
+    private int lifetime = 1000;
+    private boolean arrived = true;
+    private boolean carry = false;
+    private int dig = 1000;
 
     public AntNode(){
         super();
@@ -17,29 +24,47 @@ public class AntNode extends CellLocatedNode {
     public void onStart() {
         super.onStart();
         setLocation(currentCell);
+        onSensingIn(this);
+        setSensingRange(45);
     }
 
     @Override
     public void onClock() {
         super.onClock();
-
-        antAlgorithm();
-
+        if(dig == 1000) {
+            lifetime--;
+            if (lifetime <= 0) {
+                die();
+            }
+            antAlgorithm();
+        } else {
+            if(dig == 0){
+                dig = 1000;
+                currentCell.setCost(Cell.MIN_COST_VALUE);
+            } else {
+                System.out.println("I'm a dwarf and i'm digging a hole ! diggy diggy hole diggy diggy hole" + dig);
+                dig--;
+            }
+        }
     }
 
     @Override
     public void onArrival() {
-        Cell a = (Cell) getDestinations().element();
-        setCurrentCell(a);
-        System.out.println(currentCell);
+        arrived = true;
+        setCurrentCell((Cell) getDestinations().element());
         super.onArrival();
-
     }
 
     protected void antAlgorithm() {
-        if(getDestinations().isEmpty() || currentCell != getDestinations().element()) {
+        if(arrived) {
             Cell cell = pickNeighBoringCell();
             addDestination(cell);
+            arrived = false;
+        }
+        if(!carry){
+            takeFood();
+        } else {
+            dropFood();
         }
     }
 
@@ -78,15 +103,36 @@ public class AntNode extends CellLocatedNode {
 
             }
         }
+        dig--;
 
         return nextCell;
     }
     public void takeFood() {
-        // TODO
+        List<Node>  Nb = getSensedNodes();
+        for(int i = 0; i < Nb.size(); i++){
+            Node currentNb = Nb.get(i);
+            if(currentNb.getIcon() == "/images/ant-worm.png" && distance(currentNb) < 10){
+                System.out.println("Miam miam pour la reine !");
+                FoodNode queen = (FoodNode) currentNb;
+                queen.decreaseQuantity();
+                carry = true;
+                return;
+            }
+        }
     }
 
     public void dropFood() {
-        // TODO
+        List<Node>  Nb = getSensedNodes();
+        for(int i = 0; i < Nb.size(); i++){
+            Node currentNb = Nb.get(i);
+            if(currentNb.getIcon() == "/images/ant-queen.png" && distance(currentNb) < 10){
+                System.out.println("Oh ma reine !");
+                QueenNode queen = (QueenNode) currentNb;
+                queen.increaseFoodStock();
+                carry = false;
+                return;
+            }
+        }
     }
 
 }

@@ -28,7 +28,7 @@ public class FoodSpawner implements ClockListener{
 
     public void spawnRandomFood() {
         FoodNode n = new FoodNode();
-        Cell location = environment.getRandomLocation();
+        Cell location = environment.getRandomLocationFood();
         n.setLocation(location);
         n.setCurrentCell(location);
         tp.addNode(n);
