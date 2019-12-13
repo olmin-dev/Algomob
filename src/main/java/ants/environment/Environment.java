@@ -120,7 +120,7 @@ public class Environment {
         return getElement(locationRandom.nextInt(nbColumn-2)+1, locationRandom.nextInt(nbRow-2)+1);
     }
 
-    public Cell getRandomLocationGauss(float relative_height, int derive) {
+    public Cell getRandomLocationGauss(double relative_height, int derive) {
         Random r = new Random();
         double alt = (nbRow - 2) * relative_height;
         int moy = (int) Math.floor(alt);
@@ -131,7 +131,7 @@ public class Environment {
         if (val < 1){
             val = 1;
         }
-        return getElement(locationRandom.nextInt(nbColumn-2)+1, val);
+        return getElement(locationRandom.nextInt(nbColumn-2)+1, val + 1);
     }
 
     public int getNbColumn() {
