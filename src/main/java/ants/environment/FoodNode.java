@@ -58,4 +58,8 @@ public class FoodNode extends CellLocatedNode {
         }
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c362b0f3a2d8af034125a2fe8e10a93574d2b19c
