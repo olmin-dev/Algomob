@@ -43,12 +43,9 @@ public class AntNode extends CellLocatedNode {
         if(diggingCell.getCost() != Cell.MIN_COST_VALUE) {
             diggingCell.decreasePv();
             int PV = diggingCell.getPV();
-            if (PV % 20 == 0) {
-                int diggingProcess = diggingCell.getCost() - 1;
-                diggingCell.setCost(diggingProcess);
-                if (diggingProcess == Cell.MIN_COST_VALUE) {
-                    isDigging = false;
-                }
+            diggingCell.setCost(diggingCell.PVToColor(PV));
+            if (diggingCell.getCost() == Cell.MIN_COST_VALUE) {
+                isDigging = false;
             }
         } else {
             isDigging = false;
@@ -109,37 +106,33 @@ public class AntNode extends CellLocatedNode {
 
     protected Cell pickNeighBoringCell() {
         Cell nextCell = null;
-        Random random = new Random();
-        while(nextCell == null){
-            if(random.nextBoolean()){
-                if(random.nextBoolean()){
-                    if(random.nextBoolean()){
-                        nextCell = getCurrentCell().getBottomLeftNeighbor();
-                    } else {
-                        nextCell = getCurrentCell().getLeftNeighbor();
-                    }
-                } else {
-                    if(random.nextBoolean()){
-                        nextCell = getCurrentCell().getTopLeftNeighbor();
-                    } else {
-                        nextCell = getCurrentCell().getTopNeighbor();
-                    }
-                }
-            } else {
-                if(random.nextBoolean()){
-                    if(random.nextBoolean()){
-                        nextCell = getCurrentCell().getTopRightNeighbor();
-                    } else {
-                        nextCell = getCurrentCell().getRightNeighbor();
-                    }
-                } else {
-                    if(random.nextBoolean()){
-                        nextCell = getCurrentCell().getBottomRightNeighbor();
-                    } else {
-                        nextCell = getCurrentCell().getBottomNeighbor();
-                    }
-                }
-
+        while(nextCell == null) {
+            int a = (int) (Math.floor(Math.random() * 8));
+            switch (a) {
+                case 0:
+                    nextCell = getCurrentCell().getBottomLeftNeighbor();
+                    break;
+                case 1:
+                    nextCell = getCurrentCell().getLeftNeighbor();
+                    break;
+                case 2:
+                    nextCell = getCurrentCell().getTopLeftNeighbor();
+                    break;
+                case 3:
+                    nextCell = getCurrentCell().getTopNeighbor();
+                    break;
+                case 4:
+                    nextCell = getCurrentCell().getTopRightNeighbor();
+                    break;
+                case 5:
+                    nextCell = getCurrentCell().getRightNeighbor();
+                    break;
+                case 6:
+                    nextCell = getCurrentCell().getBottomRightNeighbor();
+                    break;
+                case 7:
+                    nextCell = getCurrentCell().getBottomNeighbor();
+                    break;
             }
         }
         if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
@@ -157,6 +150,7 @@ public class AntNode extends CellLocatedNode {
                 FoodNode queen = (FoodNode) currentNb;
                 queen.decreaseQuantity();
                 carry = true;
+                setIcon("/images/ant-bean.png");
                 return;
             }
         }
@@ -167,6 +161,8 @@ public class AntNode extends CellLocatedNode {
         QueenNode q = (QueenNode) queen;
         q.increaseFoodStock();
         carry = false;
+        setIcon("/images/ant.png");
+        return;
     }
 
 }

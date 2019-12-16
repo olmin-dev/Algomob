@@ -14,6 +14,18 @@ public class Cell extends Point {
 
     private int PV;
 
+    public int colorToPV(int color){
+        int a = color - Cell.MIN_COST_VALUE;
+        return (int) Math.exp(a / 4);
+    }
+
+    public int PVToColor(int PV){
+        int a = (int) Math.ceil(Math.log(PV)) + MIN_COST_VALUE;
+        if(a < MIN_COST_VALUE) a = MIN_COST_VALUE;
+        if(a > MAX_COST_VALUE) a = MAX_COST_VALUE;
+        return a;
+    }
+
     public int getPV() {
         return PV;
     }
@@ -37,7 +49,7 @@ public class Cell extends Point {
         if (cost <= 1){
             cost = 2;
         }
-        PV = cost * 20;
+        PV = colorToPV(cost);
     }
 
     public Cell getNeighBor(int index) {
