@@ -17,6 +17,7 @@ public class AntNode extends CellLocatedNode {
     private boolean isDigging = false;
     private Cell startCell;
     private boolean isSearchingQueen;
+    private int pheromoneBehaviour;
 
     public AntNode(){
         super();
@@ -135,6 +136,7 @@ public class AntNode extends CellLocatedNode {
                     break;
             }
         }
+        nextCell.addPheromones(pheromoneBehaviour);
         if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
             diggingCell = nextCell;
             isDigging = true;
@@ -151,6 +153,7 @@ public class AntNode extends CellLocatedNode {
                 queen.decreaseQuantity();
                 carry = true;
                 setIcon("/images/ant-bean.png");
+                pheromoneBehaviour = 1;
                 return;
             }
         }
@@ -162,6 +165,7 @@ public class AntNode extends CellLocatedNode {
         q.increaseFoodStock();
         carry = false;
         setIcon("/images/ant.png");
+        pheromoneBehaviour = 0;
         return;
     }
 

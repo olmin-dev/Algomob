@@ -2,6 +2,7 @@ package ants.environment;
 
 import io.jbotsim.core.Point;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -13,6 +14,7 @@ public class Cell extends Point {
     private int cost;
 
     private int PV;
+    private ArrayList<Integer> pheromones;
 
     public int colorToPV(int color){
         int a = color - Cell.MIN_COST_VALUE;
@@ -40,9 +42,32 @@ public class Cell extends Point {
 
     Map<Integer, Cell> neighBor = new HashMap<>();
 
+    public synchronized void addPheromones(int type){
+        int somme = 0;
+        for (int i = 0; i < pheromones.size(); i++){
+            somme += pheromones.get(i);
+        }
+        if(somme == 100){
+            if(pheromones.get((Math.abs((type-1)%2))) > 0) {
+                pheromones.add(Math.abs((type - 1) % 2), pheromones.get(Math.abs((type - 1) % 2)) - 10);
+                pheromones.add(type, pheromones.get(type) + 10);
+            }
+        } else if (somme <= 100){
+                pheromones.add(type, pheromones.get(type) + 10);
+            }
+        if (type ==  0) {
+            System.out.println("La reine est là, vive la reine : " + pheromones.get(0) + ",autre :" + pheromones.get(1));
+        }
+        if (type == 1) {
+            System.out.println("Omnomnomnomnom : " + pheromones.get(1) + ",autre :" + pheromones.get(0));
+        }
+
+    }
+
 
     public Cell(Point location){
         super(location);
+        pheromones = new ArrayList<Integer>();
         Random r = new Random();
         int alt_multiplifier = (int) (Math.floor(location.y)/20);
         cost = (int) (r.nextGaussian() * 10 ) + alt_multiplifier;
@@ -50,6 +75,8 @@ public class Cell extends Point {
             cost = 2;
         }
         PV = colorToPV(cost);
+        pheromones.add(0);
+        pheromones.add(0);
     }
 
     public Cell getNeighBor(int index) {

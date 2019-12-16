@@ -10,7 +10,7 @@ public class FoodNode extends CellLocatedNode {
     public static final int MAX_QUANTITY = 10;
     public static final int MIN_QUANTITY = 10;
     private int quantity;
-    private int lifetime = 1000;
+    private int lifetime = 10000;
 
     public FoodNode(){
         super();
