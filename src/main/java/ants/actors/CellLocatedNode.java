@@ -12,6 +12,14 @@ public class CellLocatedNode extends WayPointNode {
         return currentCell;
     }
 
+    @Override
+    public void onClock() {
+        super.onClock();
+        if(getTime()% 1000 == 0){
+            currentCell.decreasePheromones();
+        }
+    }
+
     public void setCurrentCell(Cell currentCell) {
         this.currentCell = currentCell;
     }

@@ -56,10 +56,10 @@ public class Cell extends Point {
                 pheromones.add(type, pheromones.get(type) + 10);
             }
         if (type ==  0) {
-            System.out.println("La reine est là, vive la reine : " + pheromones.get(0) + ",autre :" + pheromones.get(1));
+            //System.out.println("La reine est là, vive la reine : " + pheromones.get(0) + ",autre :" + pheromones.get(1));
         }
         if (type == 1) {
-            System.out.println("Omnomnomnomnom : " + pheromones.get(1) + ",autre :" + pheromones.get(0));
+            //System.out.println("Omnomnomnomnom : " + pheromones.get(1) + ",autre :" + pheromones.get(0));
         }
 
     }
@@ -77,6 +77,22 @@ public class Cell extends Point {
         PV = colorToPV(cost);
         pheromones.add(0);
         pheromones.add(0);
+    }
+
+    public void decreasePheromones(){
+        int type = (int) Math.floor(Math.random() * 2);
+
+        if (pheromones.get(0) == 0 && type == 0){
+            type = 1;
+        }
+        else if (pheromones.get(1) == 0 && type == 1){
+            type = 0;
+        }
+        else{
+            return;
+        }
+        pheromones.add(type,pheromones.get(type)-10);
+        System.out.println("On a perdu la trace à l'aide");
     }
 
     public Cell getNeighBor(int index) {
