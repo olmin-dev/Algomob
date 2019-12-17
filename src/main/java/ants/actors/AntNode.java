@@ -15,8 +15,6 @@ public class AntNode extends CellLocatedNode {
     private boolean carry = false;
     private Cell diggingCell;
     private boolean isDigging = false;
-    private Cell startCell;
-    private boolean isSearchingQueen;
     private int pheromoneBehaviour;
 
     public AntNode(){
@@ -28,7 +26,6 @@ public class AntNode extends CellLocatedNode {
     public void onStart() {
         super.onStart();
         setLocation(currentCell);
-        startCell = currentCell;
         onSensingIn(this);
         setSensingRange(45);
     }
@@ -41,7 +38,8 @@ public class AntNode extends CellLocatedNode {
     }
 
     public void dig(Cell diggingCell){
-        if(diggingCell.getCost() != Cell.MIN_COST_VALUE) {
+        if(diggingCell.getPV()!= 0 && diggingCell.getCost() != Cell.MIN_COST_VALUE) {
+            //System.out.println(this + " " + getLocation() + diggingCell + diggingCell.getPV() + " " + diggingCell.getCost());
             diggingCell.decreasePv();
             int PV = diggingCell.getPV();
             diggingCell.setCost(diggingCell.PVToColor(PV));
@@ -49,6 +47,7 @@ public class AntNode extends CellLocatedNode {
                 isDigging = false;
             }
         } else {
+            diggingCell.setCost(Cell.MIN_COST_VALUE);
             isDigging = false;
         }
     }
@@ -72,7 +71,7 @@ public class AntNode extends CellLocatedNode {
         if(getDestinations().element() instanceof Cell) {
             setCurrentCell((Cell) getDestinations().element());
         } else {
-            setCurrentCell(startCell);
+            //setCurrentCell(getLocation());
         }
         super.onArrival();
     }

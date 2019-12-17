@@ -18,7 +18,7 @@ public class Cell extends Point {
 
     public int colorToPV(int color){
         int a = color - Cell.MIN_COST_VALUE;
-        return (int) Math.exp(a / 4);
+        return (int) Math.exp((a / 4)) * 10;
     }
 
     public int PVToColor(int PV){
@@ -73,6 +73,9 @@ public class Cell extends Point {
         cost = (int) (r.nextGaussian() * 10 ) + alt_multiplifier;
         if (cost <= 1){
             cost = 2;
+        }
+        if (cost >= 40){
+            cost = 40;
         }
         PV = colorToPV(cost);
         pheromones.add(0);
