@@ -39,15 +39,16 @@ public class Cell extends Point {
 
     public ArrayList<Cell> getUnexploredCells(){
         ArrayList<Cell> ret = new ArrayList<>();
-        if(!getRightNeighbor().isPheromoneFood()) ret.add(getRightNeighbor());
-        if(!getBottomRightNeighbor().isPheromoneFood()) ret.add(getBottomNeighbor());
-        if(!getBottomNeighbor().isPheromoneFood()) ret.add(getBottomNeighbor());
-        if(!getBottomLeftNeighbor().isPheromoneFood()) ret.add(getBottomLeftNeighbor());
-        if(!getLeftNeighbor().isPheromoneFood()) ret.add(getLeftNeighbor());
-        if(!getTopLeftNeighbor().isPheromoneFood()) ret.add(getTopLeftNeighbor());
-        if(!getTopNeighbor().isPheromoneFood()) ret.add(getTopNeighbor());
-        if(!getTopRightNeighbor().isPheromoneFood()) ret.add(getTopRightNeighbor());
-        if(!this.isPheromoneFood()) ret.add(this);
+        if(getRightNeighbor() != null && getRightNeighbor().isPheromoneFood()) ret.add(getRightNeighbor());
+        if(getBottomRightNeighbor() != null && getBottomRightNeighbor().isPheromoneFood()) ret.add(getBottomNeighbor());
+        if(getBottomNeighbor() != null && getBottomNeighbor().isPheromoneFood()) ret.add(getBottomNeighbor());
+        if(getBottomLeftNeighbor() != null && getBottomLeftNeighbor().isPheromoneFood()) ret.add(getBottomLeftNeighbor());
+        if(getLeftNeighbor() != null && getLeftNeighbor().isPheromoneFood()) ret.add(getLeftNeighbor());
+        if(getTopLeftNeighbor() != null && getTopLeftNeighbor().isPheromoneFood()) ret.add(getTopLeftNeighbor());
+        if(getTopNeighbor() != null && getTopNeighbor().isPheromoneFood()) ret.add(getTopNeighbor());
+        if(getTopRightNeighbor() != null && getTopRightNeighbor().isPheromoneFood()) ret.add(getTopRightNeighbor());
+        if(this.isPheromoneFood()) ret.add(this);
+        return ret;
     }
 
     public int getPV() {

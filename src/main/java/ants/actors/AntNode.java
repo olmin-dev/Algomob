@@ -40,7 +40,6 @@ public class AntNode extends CellLocatedNode {
 
     public void dig(Cell diggingCell){
         if(diggingCell.getPV()!= 0 && diggingCell.getCost() != Cell.MIN_COST_VALUE) {
-            //System.out.println(this + " " + getLocation() + diggingCell + diggingCell.getPV() + " " + diggingCell.getCost());
             diggingCell.decreasePv();
             int PV = diggingCell.getPV();
             diggingCell.setCost(diggingCell.PVToColor(PV));
@@ -92,9 +91,12 @@ public class AntNode extends CellLocatedNode {
         }
     }
 
+
+
     protected void antAlgorithm() {
         if(arrived) {
-            Cell cell = pickNeighBoringCell();
+            //Cell cell = pickNeighBoringCell();
+            Cell cell = searchWay();
             addDestination(cell);
             arrived = false;
         }
@@ -109,11 +111,21 @@ public class AntNode extends CellLocatedNode {
         Cell nextCell = null;
         while(nextCell == null) {
             nextCell = pickIn(currentCell.getUnexploredCells());
+            if(nextCell == null){
+                nextCell = pickNeighBoringCell();
+            }
         }
+        nextCell.addPheromones(pheromoneBehaviour);
+        if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
+            diggingCell = nextCell;
+            isDigging = true;
+        }
+        return nextCell;
     }
 
     protected Cell pickIn(ArrayList<Cell> cells){
         int a = (int) (Math.floor(Math.random() * cells.size()));
+        if(cells.size() == 0) return null;
         return cells.get(a);
     }
 
