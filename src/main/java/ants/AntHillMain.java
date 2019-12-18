@@ -35,7 +35,9 @@ public class AntHillMain {
         EnvironmentBackgroundPainter painter = new EnvironmentBackgroundPainter(tp, environment);
         jv.getJTopology().setDefaultBackgroundPainter(painter);
 
+        tp.addClockListener(environment);
         tp.start();
+
     }
 
     private void initializeFood(int nb) {
