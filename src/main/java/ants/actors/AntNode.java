@@ -119,34 +119,38 @@ public class AntNode extends CellLocatedNode {
 
     protected Cell pickNeighBoringCell() {
         Cell nextCell = null;
+        int a;
         while(nextCell == null) {
-            int a = (int) (Math.floor(Math.random() * 8));
-            switch (a) {
-                case 0:
-                    nextCell = getCurrentCell().getBottomLeftNeighbor();
-                    break;
-                case 1:
-                    nextCell = getCurrentCell().getLeftNeighbor();
-                    break;
-                case 2:
-                    nextCell = getCurrentCell().getTopLeftNeighbor();
-                    break;
-                case 3:
-                    nextCell = getCurrentCell().getTopNeighbor();
-                    break;
-                case 4:
-                    nextCell = getCurrentCell().getTopRightNeighbor();
-                    break;
-                case 5:
-                    nextCell = getCurrentCell().getRightNeighbor();
-                    break;
-                case 6:
-                    nextCell = getCurrentCell().getBottomRightNeighbor();
-                    break;
-                case 7:
-                    nextCell = getCurrentCell().getBottomNeighbor();
-                    break;
-            }
+            //while (nextCell != null && !nextCell.getIs_obstacle()) {
+                a = (int) (Math.floor(Math.random() * 8));
+                //System.out.println("aaaaaaadgfbk,jhtgfvbrshsgdj\n");
+                switch (a) {
+                    case 0:
+                        nextCell = getCurrentCell().getBottomLeftNeighbor();
+                        break;
+                    case 1:
+                        nextCell = getCurrentCell().getLeftNeighbor();
+                        break;
+                    case 2:
+                        nextCell = getCurrentCell().getTopLeftNeighbor();
+                        break;
+                    case 3:
+                        nextCell = getCurrentCell().getTopNeighbor();
+                        break;
+                    case 4:
+                        nextCell = getCurrentCell().getTopRightNeighbor();
+                        break;
+                    case 5:
+                        nextCell = getCurrentCell().getRightNeighbor();
+                        break;
+                    case 6:
+                        nextCell = getCurrentCell().getBottomRightNeighbor();
+                        break;
+                    case 7:
+                        nextCell = getCurrentCell().getBottomNeighbor();
+                        break;
+                }
+            //}
         }
         nextCell.addPheromones(pheromoneBehaviour);
         if(nextCell.getCost() > Cell.MIN_COST_VALUE) {

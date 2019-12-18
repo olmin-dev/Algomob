@@ -12,6 +12,7 @@ public class Cell extends Point {
     public static final int MAX_COST_VALUE = 40;
     public static final int MIN_COST_VALUE = 1;
     private int cost;
+    private boolean is_obstacle;
 
     private int PV;
     private ArrayList<Integer> pheromones;
@@ -87,6 +88,11 @@ public class Cell extends Point {
 
     public Cell(Point location){
         super(location);
+        double rand = Math.random();
+        is_obstacle = false;
+        if (rand > 0.9){
+            is_obstacle = true;
+        }
         pheromones = new ArrayList<Integer>();
         Random r = new Random();
         int alt_multiplifier = (int) (Math.floor(location.y)/20);
@@ -100,6 +106,13 @@ public class Cell extends Point {
         PV = colorToPV(cost);
         pheromones.add(0);
         pheromones.add(0);
+    }
+
+    public boolean getIs_obstacle(){
+        return is_obstacle;
+    }
+    public void setIs_obstacle(boolean obstacle){
+        is_obstacle = obstacle;
     }
 
     public void decreasePheromones(){
