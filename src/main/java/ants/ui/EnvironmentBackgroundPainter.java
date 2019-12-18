@@ -52,6 +52,12 @@ public class EnvironmentBackgroundPainter extends JBackgroundPainter {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Image image = tk.getImage(getClass().getResource("/images/ant-soil.jpg"));
         g.drawImage(image, 0, 0, null);
+        /*Image image1 = tk.getImage(getClass().getResource("/images/Couleur_rouge.jpg"));
+
+        for (Map.Entry<Cell, List<Point>> listEntry : areas.entrySet()) {
+            drawEntry(g, listEntry.getKey(), listEntry.getValue());
+            g.drawImage(image1, listEntry.getValue().get(0).x,listEntry.getValue().get(0).y,  10, 10, null);
+        }*/
 
         drawMap(g);
     }
@@ -87,6 +93,4 @@ public class EnvironmentBackgroundPainter extends JBackgroundPainter {
         g2d.setColor(g2d.getColor().brighter());
         g2d.draw(filledPolygon);
     }
-
-
 }
