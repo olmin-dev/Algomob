@@ -2,11 +2,12 @@ package ants.environment;
 
 import io.jbotsim.core.Point;
 import io.jbotsim.core.Topology;
+import io.jbotsim.core.event.ClockListener;
 
 import java.util.Random;
 import java.util.Vector;
 
-public class Environment {
+public class Environment implements ClockListener {
     private Vector<Vector> env;
     private Topology tp;
     private final int nbColumn;
@@ -28,6 +29,18 @@ public class Environment {
 
         createEnvironment();
 
+    }
+
+    @Override
+    public void onClock() {
+        if(tp.getTime() % 1000 == 0){
+            for(int i = 0; i < nbColumn; i++) {
+                for (int j = 0; j < nbRow;j++) {
+                    Cell cell =(Cell) env.get(i).get(j);
+                    cell.decreasePheromones();
+                }
+            }
+        }
     }
 
     private void createEnvironment() {
