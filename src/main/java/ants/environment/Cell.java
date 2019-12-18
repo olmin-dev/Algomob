@@ -91,9 +91,6 @@ public class Cell extends Point {
         super(location);
         double rand = Math.random();
         is_obstacle = false;
-        if (rand > 0.9){
-            is_obstacle = true;
-        }
         pheromones = new ArrayList<Integer>();
         Random r = new Random();
         int alt_multiplifier = (int) (Math.floor(location.y)/20);

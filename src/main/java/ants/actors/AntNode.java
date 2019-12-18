@@ -132,10 +132,9 @@ public class AntNode extends CellLocatedNode {
     protected Cell pickNeighBoringCell() {
         Cell nextCell = null;
         int a;
-        while(nextCell == null) {
-            //while (nextCell != null && !nextCell.getIs_obstacle()) {
-                a = (int) (Math.floor(Math.random() * 8));
-                //System.out.println("aaaaaaadgfbk,jhtgfvbrshsgdj\n");
+        while(nextCell == null || nextCell.getIs_obstacle()) {
+                Random r = new Random();
+                a = (int) (r.nextInt(8));
                 switch (a) {
                     case 0:
                         nextCell = getCurrentCell().getBottomLeftNeighbor();
@@ -161,8 +160,7 @@ public class AntNode extends CellLocatedNode {
                     case 7:
                         nextCell = getCurrentCell().getBottomNeighbor();
                         break;
-                }
-            //}
+            }
         }
         nextCell.addPheromones(pheromoneBehaviour);
         if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
