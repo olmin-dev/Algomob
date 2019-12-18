@@ -6,6 +6,8 @@ import io.jbotsim.core.Color;
 import io.jbotsim.core.Node;
 import io.jbotsim.core.Point;
 
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -26,7 +28,6 @@ public class AntNode extends CellLocatedNode {
     public void onStart() {
         super.onStart();
         setLocation(currentCell);
-        onSensingIn(this);
         setSensingRange(45);
     }
 
@@ -102,6 +103,18 @@ public class AntNode extends CellLocatedNode {
         } else {
             searchQueen();
         }
+    }
+
+    protected Cell searchWay(){
+        Cell nextCell = null;
+        while(nextCell == null) {
+            nextCell = pickIn(currentCell.getUnexploredCells());
+        }
+    }
+
+    protected Cell pickIn(ArrayList<Cell> cells){
+        int a = (int) (Math.floor(Math.random() * cells.size()));
+        return cells.get(a);
     }
 
     protected Cell pickNeighBoringCell() {

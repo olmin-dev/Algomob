@@ -18,14 +18,35 @@ public class Cell extends Point {
 
     public int colorToPV(int color){
         int a = color - Cell.MIN_COST_VALUE;
-        return (int) Math.exp((a / 4)) * 10;
+        return cost * 10;
     }
 
     public int PVToColor(int PV){
-        int a = (int) Math.ceil(Math.log(PV)) + MIN_COST_VALUE;
+        int a = PV / 10  + MIN_COST_VALUE;
         if(a < MIN_COST_VALUE) a = MIN_COST_VALUE;
         if(a > MAX_COST_VALUE) a = MAX_COST_VALUE;
         return a;
+    }
+
+    public boolean isPheromoneQueen(){
+        return pheromones.get(0) == 0;
+    }
+
+    public boolean isPheromoneFood(){
+        return pheromones.get(0) == 0;
+    }
+
+    public ArrayList<Cell> getUnexploredCells(){
+        ArrayList<Cell> ret = new ArrayList<>();
+        if(!getRightNeighbor().isPheromoneFood()) ret.add(getRightNeighbor());
+        if(!getBottomRightNeighbor().isPheromoneFood()) ret.add(getBottomNeighbor());
+        if(!getBottomNeighbor().isPheromoneFood()) ret.add(getBottomNeighbor());
+        if(!getBottomLeftNeighbor().isPheromoneFood()) ret.add(getBottomLeftNeighbor());
+        if(!getLeftNeighbor().isPheromoneFood()) ret.add(getLeftNeighbor());
+        if(!getTopLeftNeighbor().isPheromoneFood()) ret.add(getTopLeftNeighbor());
+        if(!getTopNeighbor().isPheromoneFood()) ret.add(getTopNeighbor());
+        if(!getTopRightNeighbor().isPheromoneFood()) ret.add(getTopRightNeighbor());
+        if(!this.isPheromoneFood()) ret.add(this);
     }
 
     public int getPV() {
@@ -61,7 +82,6 @@ public class Cell extends Point {
         if (type == 1) {
             //System.out.println("Omnomnomnomnom : " + pheromones.get(1) + ",autre :" + pheromones.get(0));
         }
-
     }
 
 
@@ -95,7 +115,6 @@ public class Cell extends Point {
             return;
         }
         pheromones.add(type,pheromones.get(type)-10);
-        System.out.println("On a perdu la trace à l'aide");
     }
 
     public Cell getNeighBor(int index) {

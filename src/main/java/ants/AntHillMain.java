@@ -23,6 +23,7 @@ public class AntHillMain {
 
     public AntHillMain() {
         tp = new Topology(1000,800);
+        tp.disableWireless();
 
         tp.setNodeModel("ant", AntNode.class);
         tp.setNodeModel("queen", QueenNode.class);
@@ -50,7 +51,7 @@ public class AntHillMain {
 
         queen = new QueenNode();
 
-        Cell queenCell = environment.getRandomLocationGauss(1/3,10);
+        Cell queenCell = environment.getRandomLocationGauss(0.2,5);
         queen.setCurrentCell(queenCell);
         queen.setLocation(queenCell);
 
