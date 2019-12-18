@@ -34,7 +34,7 @@ public class Cell extends Point {
     }
 
     public boolean isPheromoneFood(){
-        return pheromones.get(0) == 0;
+        return pheromones.get(1) == 0;
     }
 
     public ArrayList<Cell> getUnexploredCells(){
@@ -47,7 +47,7 @@ public class Cell extends Point {
         if(getTopLeftNeighbor() != null && getTopLeftNeighbor().isPheromoneFood()) ret.add(getTopLeftNeighbor());
         if(getTopNeighbor() != null && getTopNeighbor().isPheromoneFood()) ret.add(getTopNeighbor());
         if(getTopRightNeighbor() != null && getTopRightNeighbor().isPheromoneFood()) ret.add(getTopRightNeighbor());
-        if(this.isPheromoneFood()) ret.add(this);
+        if(isPheromoneFood()) ret.add(this);
         return ret;
     }
 

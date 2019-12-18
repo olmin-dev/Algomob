@@ -72,6 +72,13 @@ public class EnvironmentBackgroundPainter extends JBackgroundPainter {
         double wallValue = key.getCost();
 
         Color color = Color.WHITE;
+        if (wallValue == Cell.MIN_COST_VALUE){
+            if (!key.isPheromoneQueen()) {
+                color = Color.GREEN;
+            } else if (!key.isPheromoneFood()){
+                color = Color.RED;
+            }
+        }
         if (wallValue != Cell.MIN_COST_VALUE) {
             int minAlpha = 10;
             int alpha = minAlpha + (int) (wallValue / Cell.MAX_COST_VALUE * 255);
