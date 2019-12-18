@@ -31,7 +31,9 @@ public class FoodSpawner implements ClockListener{
         Cell location = environment.getRandomLocationGauss(0.75,8);
         n.setLocation(location);
         n.setCurrentCell(location);
-        tp.addNode(n);
+        if(!n.getCurrentCell().getIs_obstacle()) {
+            tp.addNode(n);
+        }
     }
 
     private boolean shouldSpawn() {

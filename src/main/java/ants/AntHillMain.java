@@ -1,9 +1,6 @@
 package ants;
 
-import ants.environment.Environment;
-import ants.environment.Cell;
-import ants.environment.FoodNode;
-import ants.environment.FoodSpawner;
+import ants.environment.*;
 import ants.ui.EnvironmentBackgroundPainter;
 import ants.actors.AntNode;
 import ants.actors.QueenNode;
@@ -32,6 +29,7 @@ public class AntHillMain {
 
         initializeQueen();
         initializeFood(10);
+        initializeObstacle(10);
 
         JViewer jv = new JViewer(tp);
         EnvironmentBackgroundPainter painter = new EnvironmentBackgroundPainter(tp, environment);
@@ -45,6 +43,13 @@ public class AntHillMain {
         for(int i = 0; i<nb;i++)
             foodSpawner.spawnRandomFood();
     }
+
+    private void initializeObstacle(int nb) {
+        ObstacleSpawner obstacleSpawner= new ObstacleSpawner(tp, environment);
+        for(int i = 0; i<nb;i++)
+            obstacleSpawner.spawnRandomObstacle();
+    }
+
 
     public void initializeQueen() {
 
