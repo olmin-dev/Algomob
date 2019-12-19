@@ -29,7 +29,7 @@ public class AntHillMain {
         environment = new Environment(tp, 30, 25);
 
 
-        initializeObstacle(10);
+        initializeObstacle(20);
         initializeQueen();
         initializeFood(10);
 

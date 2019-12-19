@@ -17,7 +17,7 @@ public class ObstacleSpawner{
         Cell location = environment.getRandomLocationGauss(0.5,8);
         n.setLocation(location);
         n.setCurrentCell(location);
-        n.getCurrentCell().setIs_obstacle(true);
+        n.setObstacle(true);
         tp.addNode(n);
         }
     }

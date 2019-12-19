@@ -13,4 +13,7 @@ public class ObstacleNode extends CellLocatedNode {
         setIconSize(getIconSize()*2);
         setWirelessStatus(false);
     }
+    public void setObstacle(boolean is_obst){
+        currentCell.setIs_obstacle(is_obst);
+    }
 }
