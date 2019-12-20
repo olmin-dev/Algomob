@@ -80,7 +80,7 @@ public class EnvironmentBackgroundPainter extends JBackgroundPainter {
                 green = new Color(0, color.getGreen(), 0, (int) (key.getPheromoneQueen() * 2.5 / 100));
                 color = new Color(0, green.getGreen(), 0);
             }
-            if (key.getPheromoneFood() > 0) {
+            if (key.getPheromoneQueen() > 0) {
                 red = new Color(color.getRed(), 0, 0, (int) (key.getPheromoneQueen() * 2.5 / 100));
                 color = new Color(red.getRed(), green.getGreen(), 0);
             }
