@@ -71,17 +71,20 @@ public class Cell extends Point {
 
     public synchronized void addPheromones(int type){
         int somme = 0;
+        int autretype = Math.abs((type - 1) % 2);
+
         for (int i = 0; i < pheromones.size(); i++){
             somme += pheromones.get(i);
         }
         if(somme == 100){
-            if(pheromones.get((Math.abs((type-1)%2))) > 0) {
-                pheromones.add(Math.abs((type - 1) % 2), pheromones.get(Math.abs((type - 1) % 2)) - 10);
-                pheromones.add(type, pheromones.get(type) + 10);
+            if(pheromones.get(autretype) > 0) {
+                pheromones.set(autretype, pheromones.get(autretype) - 10);
+                pheromones.set(type, pheromones.get(type) + 10);
             }
-        } else if (somme <= 100){
-                pheromones.add(type, pheromones.get(type) + 10);
+        } else if (somme < 100){
+                pheromones.set(type, pheromones.get(type) + 10);
             }
+
         if (type ==  0) {
             //System.out.println("La reine est là, vive la reine : " + pheromones.get(0) + ",autre :" + pheromones.get(1));
         }
@@ -126,7 +129,7 @@ public class Cell extends Point {
         else if (pheromones.get(1) == 0 && type == 1) {
             type = 0;
         }
-        pheromones.add(type,pheromones.get(type)-10);
+        pheromones.set(type,pheromones.get(type)-10);
     }
 
     public Cell getNeighBor(int index) {

@@ -71,8 +71,9 @@ public class AntNode extends CellLocatedNode {
         if(getDestinations().element() instanceof Cell) {
             setCurrentCell((Cell) getDestinations().element());
         } else {
-            setCurrentCell(new Cell(getLocation()));
+            setCurrentCell((Cell) getLocation());
         }
+        currentCell.addPheromones(pheromoneBehaviour);
         super.onArrival();
     }
 
@@ -115,7 +116,6 @@ public class AntNode extends CellLocatedNode {
                 nextCell = pickNeighBoringCell();
             }
         }
-        nextCell.addPheromones(pheromoneBehaviour);
         if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
             diggingCell = nextCell;
             isDigging = true;
