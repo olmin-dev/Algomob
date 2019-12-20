@@ -125,8 +125,16 @@ public class AntNode extends CellLocatedNode {
 
     protected Cell pickIn(ArrayList<Cell> cells){
         int a = (int) (Math.floor(Math.random() * cells.size()));
-        if(cells.size() == 0) return null;
-        return cells.get(a);
+        int size = cells.size();
+        while(size > 0 && cells.get(a).getIs_obstacle()) {
+             a = (int) (Math.floor(Math.random() * cells.size()));
+             size --;
+        }
+        if(size == 0) {
+            return null;
+        }else {
+            return cells.get(a);
+        }
     }
 
     protected Cell pickNeighBoringCell() {
