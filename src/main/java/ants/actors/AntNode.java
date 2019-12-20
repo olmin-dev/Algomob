@@ -71,7 +71,7 @@ public class AntNode extends CellLocatedNode {
         if(getDestinations().element() instanceof Cell) {
             setCurrentCell((Cell) getDestinations().element());
         } else {
-            setCurrentCell(new Cell(getLocation());
+            setCurrentCell(new Cell(getLocation()));
         }
         currentCell.addPheromones(pheromoneBehaviour);
         super.onArrival();
