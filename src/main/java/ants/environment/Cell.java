@@ -37,6 +37,10 @@ public class Cell extends Point {
         return pheromones.get(1) == 0;
     }
 
+    public int getPheromoneQueen() { return pheromones.get(0);}
+
+    public int getPheromoneFood() { return pheromones.get(1);}
+
     public ArrayList<Cell> getUnexploredCells(){
         ArrayList<Cell> ret = new ArrayList<>();
         if(getRightNeighbor() != null && getRightNeighbor().isPheromoneFood()) ret.add(getRightNeighbor());
@@ -115,15 +119,12 @@ public class Cell extends Point {
 
     public void decreasePheromones(){
         int type = (int) Math.floor(Math.random() * 2);
-
+        if(pheromones.get(0) == 0 && pheromones.get(1) == 0) return;
         if (pheromones.get(0) == 0 && type == 0){
             type = 1;
         }
-        else if (pheromones.get(1) == 0 && type == 1){
+        else if (pheromones.get(1) == 0 && type == 1) {
             type = 0;
-        }
-        else{
-            return;
         }
         pheromones.add(type,pheromones.get(type)-10);
     }

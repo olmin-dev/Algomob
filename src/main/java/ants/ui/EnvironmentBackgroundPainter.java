@@ -32,6 +32,7 @@ public class EnvironmentBackgroundPainter extends JBackgroundPainter {
                 areas.put(cell, createArea(cell));
     }
     private List<Point> createArea(Cell n) {
+
         List<Point> points = new ArrayList<>();
 
         int centerX = (int) n.getX();
@@ -72,14 +73,18 @@ public class EnvironmentBackgroundPainter extends JBackgroundPainter {
         double wallValue = key.getCost();
 
         Color color = Color.WHITE;
-        if (wallValue == Cell.MIN_COST_VALUE){
-            if (!key.isPheromoneQueen()) {
-                color = Color.GREEN;
-            } else if (!key.isPheromoneFood()){
-                color = Color.RED;
+        if (wallValue == Cell.MIN_COST_VALUE) {
+            Color green = color.WHITE;
+            Color red = color.WHITE;
+            if (key.getPheromoneFood() > 0) {
+                green = new Color(0, color.getGreen(), 0, (int) (key.getPheromoneQueen() * 2.5 / 100));
+                color = new Color(0, green.getGreen(), 0);
             }
-        }
-        if (wallValue != Cell.MIN_COST_VALUE) {
+            if (key.getPheromoneFood() > 0) {
+                red = new Color(color.getRed(), 0, 0, (int) (key.getPheromoneQueen() * 2.5 / 100));
+                color = new Color(red.getRed(), green.getGreen(), 0);
+            }
+        } else {
             int minAlpha = 10;
             int alpha = minAlpha + (int) (wallValue / Cell.MAX_COST_VALUE * 255);
             alpha = alpha > 255 ? 255 : alpha;
