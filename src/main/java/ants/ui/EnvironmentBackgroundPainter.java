@@ -74,14 +74,14 @@ public class EnvironmentBackgroundPainter extends JBackgroundPainter {
 
         Color color = Color.WHITE;
         if (wallValue == Cell.MIN_COST_VALUE) {
-            Color green = color.WHITE;
-            Color red = color.WHITE;
-            if (key.getPheromoneFood() > 0) {
-                green = new Color(0, color.getGreen(), 0, (int) (key.getPheromoneQueen() * 2.5 / 100));
+            Color green = color.BLACK;
+            Color red = color.BLACK;
+            if (key.getPheromoneQueen() > 0) {
+                green = new Color(0, 255, 0, (int) (key.getPheromoneQueen() * 2.5 / 100));
                 color = new Color(0, green.getGreen(), 0);
             }
-            if (key.getPheromoneQueen() > 0) {
-                red = new Color(color.getRed(), 0, 0, (int) (key.getPheromoneQueen() * 2.5 / 100));
+            if (key.getPheromoneFood() > 0) {
+                red = new Color(255, 0, 0, (int) (key.getPheromoneQueen() * 2.5 / 100));
                 color = new Color(red.getRed(), green.getGreen(), 0);
             }
         } else {
