@@ -18,6 +18,7 @@ public class AntNode extends CellLocatedNode {
     private Cell diggingCell;
     private boolean isDigging = false;
     private int pheromoneBehaviour;
+    private Cell lastCell;
 
     public AntNode(){
         super();
@@ -67,6 +68,7 @@ public class AntNode extends CellLocatedNode {
 
     @Override
     public void onArrival() {
+        lastCell = currentCell;
         arrived = true;
         if(getDestinations().element() instanceof Cell) {
             setCurrentCell((Cell) getDestinations().element());
