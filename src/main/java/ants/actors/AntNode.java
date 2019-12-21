@@ -114,7 +114,7 @@ public class AntNode extends CellLocatedNode {
         Cell nextCell = null;
         while(nextCell == null) {
             if(pheromoneBehaviour == 0) {
-                nextCell = pickIn(currentCell.getUnexploredCells());
+                nextCell = pickIn(currentCell.getFoodCells());
             } else {
                 nextCell = pickIn(currentCell.getExploredCells());
             }
@@ -133,7 +133,7 @@ public class AntNode extends CellLocatedNode {
         int a = (int) (Math.floor(Math.random() * cells.size()));
         int size = cells.size();
         while(size > 0 && cells.get(a).getIs_obstacle()) {
-             a = (int) (Math.floor(Math.random() * cells.size()));
+            a = (int) (Math.floor(Math.random() * cells.size()));
              size --;
         }
         if(size == 0) {
@@ -147,9 +147,11 @@ public class AntNode extends CellLocatedNode {
         Cell nextCell = null;
         int a;
         while(nextCell == null || nextCell.getIs_obstacle() || nextCell == lastCell) {
-                Random r = new Random();
-                a = (int) (r.nextInt(8));
-                switch (a) {
+            Random r = new Random();
+            a = (int) (r.nextInt(8));
+            //System.out.println(a+" " + nextCell);
+
+            switch (a) {
                     case 0:
                         nextCell = getCurrentCell().getBottomLeftNeighbor();
                         break;
