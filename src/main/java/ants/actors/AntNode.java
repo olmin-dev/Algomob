@@ -71,17 +71,7 @@ public class AntNode extends CellLocatedNode {
     @Override
     public void onArrival() {
         arrived = true;
-<<<<<<< HEAD
         setCurrentCell((Cell) getDestinations().element());
-=======
-        if(getDestinations().element() instanceof Cell) {
-            lastCell = currentCell;
-            setCurrentCell((Cell) getDestinations().element());
-        } else {
-            System.out.println("aled" + getLocation());
-            setCurrentCell(new Cell(getLocation()));
-        }
->>>>>>> b74ac148c1df7d4a9f722df741cb4b7e22ae7b03
         currentCell.addPheromones(pheromoneBehaviour);
         super.onArrival();
     }

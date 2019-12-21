@@ -84,7 +84,6 @@ public class Cell extends Point {
         return ret;
     }
 
-<<<<<<< HEAD
     public ArrayList<Cell> getQueenCells(){
         ArrayList<Cell> ret = new ArrayList<>();
         int maxQueenPher = 0;
@@ -107,10 +106,7 @@ public class Cell extends Point {
         return ret;
     }
 
-    public ArrayList<Cell> getExploredCells(){
-=======
     public ArrayList<Cell> getExploredCells(int maxQueenPher){
->>>>>>> b74ac148c1df7d4a9f722df741cb4b7e22ae7b03
         ArrayList<Cell> ret = new ArrayList<>();
 
         if(getRightNeighbor() != null && getRightNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getRightNeighbor());
