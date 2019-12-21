@@ -70,9 +70,9 @@ public class AntNode extends CellLocatedNode {
 
     @Override
     public void onArrival() {
-        lastCell = currentCell;
         arrived = true;
         if(getDestinations().element() instanceof Cell) {
+            lastCell = currentCell;
             setCurrentCell((Cell) getDestinations().element());
         } else {
             System.out.println("aled" + getLocation());
@@ -116,9 +116,10 @@ public class AntNode extends CellLocatedNode {
 
     protected Cell searchWay(){
         Cell nextCell = null;
+        int i;
         while(nextCell == null) {
             if(pheromoneBehaviour == 0) {
-                int i = 0;
+                i = 0;
                 ArrayList<Integer> phersFood = currentCell.getAroundPheromonesFood();
                 Collections.sort(phersFood, Collections.reverseOrder());
                 nextCell = pickIn(currentCell.getFoodCells(0));
@@ -128,7 +129,7 @@ public class AntNode extends CellLocatedNode {
                     i++;
                 }
             } else {
-                int i = 0;
+                i = 0;
                 ArrayList<Integer> phersQueen = currentCell.getAroundPheromonesQueen();
                 Collections.sort(phersQueen,Collections.reverseOrder());
                 while(nextCell == null || (i < phersQueen.size() && (nextCell == lastCell || nextCell.getIs_obstacle()))) {
@@ -154,7 +155,6 @@ public class AntNode extends CellLocatedNode {
         int a = (int) (Math.floor(Math.random() * cells.size()));
         int size = cells.size();
         while(size > 0 && (cells.get(a).getIs_obstacle() || cells.get(a) == lastCell)) {
-            System.out.println("c");
             a = (int) (Math.floor(Math.random() * cells.size()));
              size --;
         }
