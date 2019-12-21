@@ -2,6 +2,7 @@ package ants.environment;
 
 import io.jbotsim.core.Point;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,17 +42,34 @@ public class Cell extends Point {
 
     public int getPheromoneFood() { return pheromones.get(1);}
 
-    public ArrayList<Cell> getFoodCells(){
+    public ArrayList<Integer> getAroundPheromonesFood(){
+        ArrayList<Integer> pheromones = new ArrayList<>();
+        if(getRightNeighbor() != null)  pheromones.add(getRightNeighbor().getPheromoneFood());
+        if(getBottomRightNeighbor() != null) pheromones.add(getBottomRightNeighbor().getPheromoneFood());
+        if(getBottomNeighbor() != null)  pheromones.add(getBottomNeighbor().getPheromoneFood());
+        if(getBottomLeftNeighbor() != null)  pheromones.add(getBottomLeftNeighbor().getPheromoneFood());
+        if(getLeftNeighbor() != null)  pheromones.add(getLeftNeighbor().getPheromoneFood());
+        if(getTopLeftNeighbor() != null)  pheromones.add(getTopLeftNeighbor().getPheromoneFood());
+        if(getTopNeighbor() != null)  pheromones.add(getTopNeighbor().getPheromoneFood());
+        if(getTopRightNeighbor() != null)  pheromones.add(getTopRightNeighbor().getPheromoneFood());
+        return pheromones;
+    }
+
+    public ArrayList<Integer> getAroundPheromonesQueen(){
+        ArrayList<Integer> pheromones = new ArrayList<>();
+        if(getRightNeighbor() != null)  pheromones.add(getRightNeighbor().getPheromoneQueen());
+        if(getBottomRightNeighbor() != null) pheromones.add(getBottomRightNeighbor().getPheromoneQueen());
+        if(getBottomNeighbor() != null)  pheromones.add(getBottomNeighbor().getPheromoneQueen());
+        if(getBottomLeftNeighbor() != null)  pheromones.add(getBottomLeftNeighbor().getPheromoneQueen());
+        if(getLeftNeighbor() != null)  pheromones.add(getLeftNeighbor().getPheromoneQueen());
+        if(getTopLeftNeighbor() != null)  pheromones.add(getTopLeftNeighbor().getPheromoneQueen());
+        if(getTopNeighbor() != null)  pheromones.add(getTopNeighbor().getPheromoneQueen());
+        if(getTopRightNeighbor() != null)  pheromones.add(getTopRightNeighbor().getPheromoneQueen());
+        return pheromones;
+    }
+
+    public ArrayList<Cell> getFoodCells(int maxFoodPher){
         ArrayList<Cell> ret = new ArrayList<>();
-        int maxFoodPher = 0;
-        if(getRightNeighbor() != null && getRightNeighbor().getPheromoneFood() > maxFoodPher)  maxFoodPher = getRightNeighbor().getPheromoneFood();
-        if(getBottomRightNeighbor() != null && getBottomRightNeighbor().getPheromoneFood() > maxFoodPher)  maxFoodPher = getBottomRightNeighbor().getPheromoneFood();
-        if(getBottomNeighbor() != null && getBottomNeighbor().getPheromoneFood() > maxFoodPher)  maxFoodPher = getBottomNeighbor().getPheromoneFood();
-        if(getBottomLeftNeighbor() != null && getBottomLeftNeighbor().getPheromoneFood() > maxFoodPher)  maxFoodPher = getBottomLeftNeighbor().getPheromoneFood();
-        if(getLeftNeighbor() != null && getLeftNeighbor().getPheromoneFood() > maxFoodPher)  maxFoodPher = getLeftNeighbor().getPheromoneFood();
-        if(getTopLeftNeighbor() != null && getTopLeftNeighbor().getPheromoneFood() > maxFoodPher)  maxFoodPher = getTopLeftNeighbor().getPheromoneFood();
-        if(getTopNeighbor() != null && getTopNeighbor().getPheromoneFood() > maxFoodPher)  maxFoodPher = getTopNeighbor().getPheromoneFood();
-        if(getTopRightNeighbor() != null && getTopRightNeighbor().getPheromoneFood() > maxFoodPher)  maxFoodPher = getTopRightNeighbor().getPheromoneFood();
 
         if(getRightNeighbor() != null && getRightNeighbor().getPheromoneFood() == maxFoodPher)  ret.add(getRightNeighbor());
         if(getBottomRightNeighbor() != null && getBottomRightNeighbor().getPheromoneFood() == maxFoodPher) ret.add(getBottomRightNeighbor());
@@ -66,6 +84,7 @@ public class Cell extends Point {
         return ret;
     }
 
+<<<<<<< HEAD
     public ArrayList<Cell> getQueenCells(){
         ArrayList<Cell> ret = new ArrayList<>();
         int maxQueenPher = 0;
@@ -89,16 +108,10 @@ public class Cell extends Point {
     }
 
     public ArrayList<Cell> getExploredCells(){
+=======
+    public ArrayList<Cell> getExploredCells(int maxQueenPher){
+>>>>>>> b74ac148c1df7d4a9f722df741cb4b7e22ae7b03
         ArrayList<Cell> ret = new ArrayList<>();
-        int maxQueenPher = 0;
-        if(getRightNeighbor() != null && getRightNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getRightNeighbor().getPheromoneQueen();
-        if(getBottomRightNeighbor() != null && getBottomRightNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getBottomRightNeighbor().getPheromoneQueen();
-        if(getBottomNeighbor() != null && getBottomNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getBottomNeighbor().getPheromoneQueen();
-        if(getBottomLeftNeighbor() != null && getBottomLeftNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getBottomLeftNeighbor().getPheromoneQueen();
-        if(getLeftNeighbor() != null && getLeftNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getLeftNeighbor().getPheromoneQueen();
-        if(getTopLeftNeighbor() != null && getTopLeftNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getTopLeftNeighbor().getPheromoneQueen();
-        if(getTopNeighbor() != null && getTopNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getTopNeighbor().getPheromoneQueen();
-        if(getTopRightNeighbor() != null && getTopRightNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getTopRightNeighbor().getPheromoneQueen();
 
         if(getRightNeighbor() != null && getRightNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getRightNeighbor());
         if(getBottomRightNeighbor() != null && getBottomRightNeighbor().getPheromoneQueen() == maxQueenPher) ret.add(getBottomRightNeighbor());

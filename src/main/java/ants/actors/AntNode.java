@@ -7,9 +7,8 @@ import io.jbotsim.core.Node;
 import io.jbotsim.core.Point;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class AntNode extends CellLocatedNode {
     private int lifetime = 10000;
@@ -71,9 +70,18 @@ public class AntNode extends CellLocatedNode {
 
     @Override
     public void onArrival() {
-        lastCell = currentCell;
         arrived = true;
+<<<<<<< HEAD
         setCurrentCell((Cell) getDestinations().element());
+=======
+        if(getDestinations().element() instanceof Cell) {
+            lastCell = currentCell;
+            setCurrentCell((Cell) getDestinations().element());
+        } else {
+            System.out.println("aled" + getLocation());
+            setCurrentCell(new Cell(getLocation()));
+        }
+>>>>>>> b74ac148c1df7d4a9f722df741cb4b7e22ae7b03
         currentCell.addPheromones(pheromoneBehaviour);
         super.onArrival();
     }
@@ -110,13 +118,30 @@ public class AntNode extends CellLocatedNode {
 
     protected Cell searchWay(){
         Cell nextCell = null;
+        int i;
         while(nextCell == null) {
             if(pheromoneBehaviour == 0) {
-                nextCell = pickIn(currentCell.getFoodCells());
+                i = 0;
+                ArrayList<Integer> phersFood = currentCell.getAroundPheromonesFood();
+                Collections.sort(phersFood, Collections.reverseOrder());
+                nextCell = pickIn(currentCell.getFoodCells(0));
+                while(nextCell == null || (i < phersFood.size() && (nextCell == lastCell || nextCell.getIs_obstacle()))) {
+                    int maxpheromoneFood = phersFood.get(i);
+                    nextCell = pickIn(currentCell.getFoodCells(maxpheromoneFood));
+                    i++;
+                }
             } else {
-                nextCell = pickIn(currentCell.getExploredCells());
+                i = 0;
+                ArrayList<Integer> phersQueen = currentCell.getAroundPheromonesQueen();
+                Collections.sort(phersQueen,Collections.reverseOrder());
+                while(nextCell == null || (i < phersQueen.size() && (nextCell == lastCell || nextCell.getIs_obstacle()))) {
+                    int maxpheromoneQueen = phersQueen.get(i);
+                    nextCell = pickIn(currentCell.getExploredCells(maxpheromoneQueen));
+                    i++;
+                }
             }
-            if(nextCell == null || nextCell == lastCell){
+
+            if(nextCell == null || nextCell == lastCell || nextCell.getIs_obstacle()){
                 nextCell = pickNeighBoringCell();
             }
         }
@@ -131,7 +156,7 @@ public class AntNode extends CellLocatedNode {
     protected Cell pickIn(ArrayList<Cell> cells){
         int a = (int) (Math.floor(Math.random() * cells.size()));
         int size = cells.size();
-        while(size > 0 && cells.get(a).getIs_obstacle() && cells.get(a) == lastCell) {
+        while(size > 0 && (cells.get(a).getIs_obstacle() || cells.get(a) == lastCell)) {
             a = (int) (Math.floor(Math.random() * cells.size()));
              size --;
         }
