@@ -55,6 +55,19 @@ public class Cell extends Point {
         return ret;
     }
 
+    public ArrayList<Cell> getExploredCells(){
+        ArrayList<Cell> ret = new ArrayList<>();
+        if(getRightNeighbor() != null && getRightNeighbor().isPheromoneQueen()) ret.add(getRightNeighbor());
+        if(getBottomRightNeighbor() != null && getBottomRightNeighbor().isPheromoneQueen()) ret.add(getBottomNeighbor());
+        if(getBottomNeighbor() != null && getBottomNeighbor().isPheromoneQueen()) ret.add(getBottomNeighbor());
+        if(getBottomLeftNeighbor() != null && getBottomLeftNeighbor().isPheromoneQueen()) ret.add(getBottomLeftNeighbor());
+        if(getLeftNeighbor() != null && getLeftNeighbor().isPheromoneQueen()) ret.add(getLeftNeighbor());
+        if(getTopLeftNeighbor() != null && getTopLeftNeighbor().isPheromoneQueen()) ret.add(getTopLeftNeighbor());
+        if(getTopNeighbor() != null && getTopNeighbor().isPheromoneQueen()) ret.add(getTopNeighbor());
+        if(getTopRightNeighbor() != null && getTopRightNeighbor().isPheromoneQueen()) ret.add(getTopRightNeighbor());
+        return ret;
+    }
+
     public int getPV() {
         return PV;
     }

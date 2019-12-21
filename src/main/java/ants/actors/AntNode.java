@@ -113,8 +113,12 @@ public class AntNode extends CellLocatedNode {
     protected Cell searchWay(){
         Cell nextCell = null;
         while(nextCell == null) {
-            nextCell = pickIn(currentCell.getUnexploredCells());
-            if(nextCell == null){
+            if(pheromoneBehaviour == 0) {
+                nextCell = pickIn(currentCell.getUnexploredCells());
+            } else {
+                nextCell = pickIn(currentCell.getExploredCells());
+            }
+            if(nextCell == null || nextCell == lastCell){
                 nextCell = pickNeighBoringCell();
             }
         }
@@ -142,7 +146,7 @@ public class AntNode extends CellLocatedNode {
     protected Cell pickNeighBoringCell() {
         Cell nextCell = null;
         int a;
-        while(nextCell == null || nextCell.getIs_obstacle()) {
+        while(nextCell == null || nextCell.getIs_obstacle() || nextCell == lastCell) {
                 Random r = new Random();
                 a = (int) (r.nextInt(8));
                 switch (a) {
