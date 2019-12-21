@@ -46,6 +46,7 @@ public class AntNode extends CellLocatedNode {
             diggingCell.setCost(diggingCell.PVToColor(PV));
             if (diggingCell.getCost() == Cell.MIN_COST_VALUE) {
                 isDigging = false;
+                setIcon("/images/ant.png");
             }
         } else {
             diggingCell.setCost(Cell.MIN_COST_VALUE);
