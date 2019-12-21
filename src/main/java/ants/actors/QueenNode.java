@@ -23,7 +23,7 @@ public class QueenNode extends CellLocatedNode {
 
     @Override
     public void onClock() {
-
+        currentCell.addPheromones(0);
         if (shouldProduceOffspring())
             produceOffspring();
 

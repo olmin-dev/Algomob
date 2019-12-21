@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 public class AntNode extends CellLocatedNode {
-    private int lifetime = 1000;
+    private int lifetime = 10000;
     private boolean arrived = true;
     private boolean carry = false;
     private Cell diggingCell;
@@ -137,7 +137,7 @@ public class AntNode extends CellLocatedNode {
     protected Cell pickIn(ArrayList<Cell> cells){
         int a = (int) (Math.floor(Math.random() * cells.size()));
         int size = cells.size();
-        while(size > 0 && cells.get(a).getIs_obstacle()) {
+        while(size > 0 && cells.get(a).getIs_obstacle() && cells.get(a) == lastCell) {
             a = (int) (Math.floor(Math.random() * cells.size()));
              size --;
         }
