@@ -7,9 +7,8 @@ import io.jbotsim.core.Node;
 import io.jbotsim.core.Point;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class AntNode extends CellLocatedNode {
     private int lifetime = 10000;
@@ -119,10 +118,26 @@ public class AntNode extends CellLocatedNode {
         Cell nextCell = null;
         while(nextCell == null) {
             if(pheromoneBehaviour == 0) {
-                nextCell = pickIn(currentCell.getFoodCells());
+                int i = 0;
+                ArrayList<Integer> phersFood = currentCell.getAroundPheromonesFood();
+                Collections.sort(phersFood, Collections.reverseOrder());
+                nextCell = pickIn(currentCell.getFoodCells(0));
+                while(nextCell == null || (i < phersFood.size() && (nextCell == lastCell || nextCell.getIs_obstacle()))) {
+                    int maxpheromoneFood = phersFood.get(i);
+                    nextCell = pickIn(currentCell.getFoodCells(maxpheromoneFood));
+                    i++;
+                }
             } else {
-                nextCell = pickIn(currentCell.getExploredCells());
+                int i = 0;
+                ArrayList<Integer> phersQueen = currentCell.getAroundPheromonesQueen();
+                Collections.sort(phersQueen,Collections.reverseOrder());
+                while(nextCell == null || (i < phersQueen.size() && (nextCell == lastCell || nextCell.getIs_obstacle()))) {
+                    int maxpheromoneQueen = phersQueen.get(i);
+                    nextCell = pickIn(currentCell.getExploredCells(maxpheromoneQueen));
+                    i++;
+                }
             }
+
             if(nextCell == null || nextCell == lastCell || nextCell.getIs_obstacle()){
                 nextCell = pickNeighBoringCell();
             }
@@ -138,7 +153,8 @@ public class AntNode extends CellLocatedNode {
     protected Cell pickIn(ArrayList<Cell> cells){
         int a = (int) (Math.floor(Math.random() * cells.size()));
         int size = cells.size();
-        while(size > 0 && cells.get(a).getIs_obstacle() && cells.get(a) == lastCell) {
+        while(size > 0 && (cells.get(a).getIs_obstacle() || cells.get(a) == lastCell)) {
+            System.out.println("c");
             a = (int) (Math.floor(Math.random() * cells.size()));
              size --;
         }
