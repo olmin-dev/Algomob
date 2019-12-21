@@ -3,6 +3,7 @@ package ants.environment;
 import io.jbotsim.core.Point;
 import io.jbotsim.core.Topology;
 import io.jbotsim.core.event.ClockListener;
+import ants.actors.QueenNode;
 
 import java.util.Random;
 import java.util.Vector;
@@ -16,6 +17,7 @@ public class Environment implements ClockListener {
     private final double elementWidth;
     private final double elementHeight;
     private final Random locationRandom;
+    private QueenNode queen;
 
     public Environment(Topology tp, int nbColumn, int nbRow) {
         this.tp = tp;
@@ -27,7 +29,7 @@ public class Environment implements ClockListener {
 
         locationRandom = new Random();
 
-        createEnvironment();
+        createEnvironment(tp);
 
     }
 
@@ -43,7 +45,7 @@ public class Environment implements ClockListener {
         }
     }
 
-    private void createEnvironment() {
+    private void createEnvironment(Topology tp) {
 
         env = new Vector<>(nbColumn);
 
@@ -52,8 +54,50 @@ public class Environment implements ClockListener {
         gridStartLocation = new Point(gridStartX, gridStartY);
 
         createCells(elementWidth, elementHeight);
-
+        initializeObstacle(50, tp);
+        initializeFood(10, tp);
         updateNeighborhood();
+        initializeQueen(tp);
+    }
+
+    private void initializeFood(int nb, Topology tp) {
+        FoodSpawner foodSpawner = new FoodSpawner(tp, this);
+        for(int i = 0; i<nb;i++)
+            foodSpawner.spawnRandomFood();
+    }
+
+    public QueenNode getQueen() {
+        return queen;
+    }
+
+    public void initializeQueen(Topology tp) {
+
+        queen = new QueenNode();
+        Cell queenCell = this.getRandomLocationGauss(0.2, 5);
+
+
+        while (queenCell.getIs_obstacle()) {
+            queenCell = this.getRandomLocationGauss(0.2, 5);
+            queen.setCurrentCell(queenCell);
+            queen.setLocation(queenCell);
+        }
+        queen.setCurrentCell(queenCell);
+        queen.setLocation(queenCell);
+
+        queenCell.setCost(Cell.MIN_COST_VALUE);
+        if(queenCell.getBottomNeighbor() != null) queenCell.getBottomNeighbor().setCost(Cell.MIN_COST_VALUE);
+        if(queenCell.getRightNeighbor() != null)queenCell.getRightNeighbor().setCost(Cell.MIN_COST_VALUE);
+        if(queenCell.getLeftNeighbor() != null)queenCell.getLeftNeighbor().setCost(Cell.MIN_COST_VALUE);
+        if(queenCell.getTopNeighbor() != null)queenCell.getTopNeighbor().setCost(Cell.MIN_COST_VALUE);
+
+        tp.addNode(queen);
+
+    }
+
+    private void initializeObstacle(int nb, Topology tp) {
+        ObstacleSpawner obstacleSpawner= new ObstacleSpawner(tp, this);
+        for(int i = 0; i<nb;i++)
+            obstacleSpawner.spawnRandomObstacle();
     }
 
     private void createCells(double width, double height) {
@@ -65,34 +109,36 @@ public class Environment implements ClockListener {
     private void updateNeighborhood() {
         for(int x = 0; x < nbColumn; x++)
             for(int y = 0; y < nbRow; y++)
-                updateNeighbors(x, y);
+                if(!getElement(x, y).getIs_obstacle()) {
+                    updateNeighbors(x, y);
+                }
     }
 
     private void updateNeighbors(int x, int y) {
         Cell current = getElement(x, y);
 
-        if(x>0)
+        if(x>0 && !getElement(x - 1, y).getIs_obstacle())
             current.setLefNeighbor(getElement(x-1, y));
 
-        if(x>0 && y>0)
+        if(x>0 && y>0 && !getElement(x - 1, y - 1).getIs_obstacle())
             current.setTopLefNeighbor(getElement(x-1, y-1));
 
-        if(x>0 && y<nbRow-1)
+        if(x>0 && y<nbRow-1 && !getElement(x - 1, y + 1).getIs_obstacle())
             current.setBottomLeftNeighbor(getElement(x-1, y+1));
 
-        if(y>0)
+        if(y>0 && !getElement(x, y - 1).getIs_obstacle())
             current.setTopNeighbor(getElement(x, y-1));
 
-        if(x<nbColumn-1)
+        if(x<nbColumn-1 && !getElement(x + 1, y).getIs_obstacle())
             current.setRightNeighbor(getElement(x+1, y));
 
-        if(x<nbColumn-1 && y>0)
+        if(x<nbColumn-1 && y>0 && !getElement(x + 1, y - 1).getIs_obstacle())
             current.setTopRightNeighbor(getElement(x+1, y-1));
 
-        if(x<nbColumn-1 && y<nbRow-1)
+        if(x<nbColumn-1 && y<nbRow-1 && !getElement(x + 1, y + 1).getIs_obstacle())
             current.setBottomRightNeighbor(getElement(x+1, y+1));
 
-        if(y<nbRow-1)
+        if(y<nbRow-1 && !getElement(x, y + 1).getIs_obstacle())
             current.setBottomNeighbor(getElement(x, y+1));
     }
 

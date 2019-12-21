@@ -73,12 +73,7 @@ public class AntNode extends CellLocatedNode {
     public void onArrival() {
         lastCell = currentCell;
         arrived = true;
-        if(getDestinations().element() instanceof Cell) {
-            setCurrentCell((Cell) getDestinations().element());
-        } else {
-            System.out.println("aled" + getLocation());
-            setCurrentCell(new Cell(getLocation()));
-        }
+        setCurrentCell((Cell) getDestinations().element());
         currentCell.addPheromones(pheromoneBehaviour);
         super.onArrival();
     }
@@ -87,11 +82,9 @@ public class AntNode extends CellLocatedNode {
         List<Node> Nb = getSensedNodes();
         for(int i = 0; i < Nb.size(); i++){
             Node currentNb = Nb.get(i);
-            if(currentNb.getIcon() == "/images/ant-queen.png"){
-                if( distance(currentNb) < 10){
-                    dropFood(currentNb);
-                    return;
-                }
+            if(currentNb.getIcon() == "/images/ant-queen.png" && distance(currentNb) < 10){
+                dropFood(currentNb);
+                return;
             }
         }
         Cell cell = searchWay();
@@ -191,6 +184,7 @@ public class AntNode extends CellLocatedNode {
         }
         return nextCell;
     }
+
     public void takeFood() {
         List<Node>  Nb = getSensedNodes();
         for(int i = 0; i < Nb.size(); i++){
@@ -214,7 +208,5 @@ public class AntNode extends CellLocatedNode {
         carry = false;
         setIcon("/images/ant.png");
         pheromoneBehaviour = 0;
-        return;
     }
-
 }
