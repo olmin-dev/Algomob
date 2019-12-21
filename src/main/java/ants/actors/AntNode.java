@@ -50,6 +50,7 @@ public class AntNode extends CellLocatedNode {
         } else {
             diggingCell.setCost(Cell.MIN_COST_VALUE);
             isDigging = false;
+            setIcon("/images/ant.png");
         }
     }
 
@@ -60,6 +61,7 @@ public class AntNode extends CellLocatedNode {
             decreaseLife();
             antAlgorithm();
         } else {
+            setDirection(diggingCell);
             dig(diggingCell);
             decreaseLife();
             //On bloque le comportement normale de a fourmi qui ne peut que finir de creuser une fois lancées
@@ -125,6 +127,7 @@ public class AntNode extends CellLocatedNode {
         if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
             diggingCell = nextCell;
             isDigging = true;
+            setIcon("/images/ant_dig.png");
         }
         return nextCell;
     }
@@ -181,6 +184,7 @@ public class AntNode extends CellLocatedNode {
         if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
             diggingCell = nextCell;
             isDigging = true;
+            setIcon("/images/ant_dig.png");
         }
         return nextCell;
     }
