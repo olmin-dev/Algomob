@@ -75,6 +75,7 @@ public class AntNode extends CellLocatedNode {
         if(getDestinations().element() instanceof Cell) {
             setCurrentCell((Cell) getDestinations().element());
         } else {
+            System.out.println("aled" + getLocation());
             setCurrentCell(new Cell(getLocation()));
         }
         currentCell.addPheromones(pheromoneBehaviour);
@@ -82,18 +83,19 @@ public class AntNode extends CellLocatedNode {
     }
 
     public void searchQueen(){
-        List<Node>  Nb = getSensedNodes();
+        List<Node> Nb = getSensedNodes();
         for(int i = 0; i < Nb.size(); i++){
             Node currentNb = Nb.get(i);
             if(currentNb.getIcon() == "/images/ant-queen.png"){
                 if( distance(currentNb) < 10){
                     dropFood(currentNb);
-                } else {
-                    addDestination(currentNb.getLocation());
-                    arrived = false;
+                    return;
                 }
             }
         }
+        Cell cell = searchWay();
+        addDestination(cell);
+        arrived = false;
     }
 
 
@@ -194,8 +196,8 @@ public class AntNode extends CellLocatedNode {
             Node currentNb = Nb.get(i);
             if(currentNb.getIcon() == "/images/ant-worm.png" && distance(currentNb) < 10){
                 System.out.println("Miam miam pour la reine !");
-                FoodNode queen = (FoodNode) currentNb;
-                queen.decreaseQuantity();
+                FoodNode food = (FoodNode) currentNb;
+                food.decreaseQuantity();
                 carry = true;
                 setIcon("/images/ant-bean.png");
                 pheromoneBehaviour = 1;
