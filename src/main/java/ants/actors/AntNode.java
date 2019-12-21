@@ -123,7 +123,7 @@ public class AntNode extends CellLocatedNode {
             } else {
                 nextCell = pickIn(currentCell.getExploredCells());
             }
-            if(nextCell == null || nextCell == lastCell){
+            if(nextCell == null || nextCell == lastCell || nextCell.getIs_obstacle()){
                 nextCell = pickNeighBoringCell();
             }
         }
