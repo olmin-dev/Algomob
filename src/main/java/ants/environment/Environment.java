@@ -54,7 +54,7 @@ public class Environment implements ClockListener {
         gridStartLocation = new Point(gridStartX, gridStartY);
 
         createCells(elementWidth, elementHeight);
-        initializeObstacle(0, tp);
+        initializeObstacle(20, tp);
         initializeFood(20, tp);
         updateNeighborhood();
         initializeQueen(tp);
@@ -103,7 +103,7 @@ public class Environment implements ClockListener {
     private void createCells(double width, double height) {
         for(int x = 0; x < nbColumn; x++)
             for(int y = 0; y < nbRow; y++)
-                addCell(x, y, createCell(x, y, width, height));
+                addCell(x, y, createCell(x, y, width, height,x+y));
     }
 
     private void updateNeighborhood() {
@@ -158,9 +158,9 @@ public class Environment implements ClockListener {
 
     }
 
-    private Cell createCell(int x, int y, double width, double height) {
+    private Cell createCell(int x, int y, double width, double height,int id) {
         Point location = new Point(gridStartLocation.getX() + x * width, gridStartLocation.getY() + y * height);
-        Cell cell = new Cell(location);
+        Cell cell = new Cell(location,id);
         return cell;
     }
 

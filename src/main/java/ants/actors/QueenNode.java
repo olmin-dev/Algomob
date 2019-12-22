@@ -18,7 +18,7 @@ public class QueenNode extends CellLocatedNode {
 
     public QueenNode(){
         super();
-        foodStock = 100;
+        foodStock = 100 ;
         lifetime = 0;
         setIcon("/images/ant-queen.png");
         setIconSize(getIconSize()*2);
@@ -54,6 +54,7 @@ public class QueenNode extends CellLocatedNode {
 
         if(foodStock <= 0) {
             die();
+            System.out.println("Temps de survie : "+ lifetime);
             System.exit(0);
         }
 

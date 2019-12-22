@@ -116,11 +116,10 @@ public class AntNode extends CellLocatedNode {
         int i;
         while(nextCell == null) {
             i = 1;
-            if(!carry) {
+            if(pheromoneBehaviour == 0) {
                 ArrayList<Integer> phersFood = currentCell.getAroundPheromonesFood();
                 Collections.sort(phersFood,Collections.reverseOrder());
                 nextCell = pickIn(currentCell.getFoodCells(phersFood.get(0)));
-                System.out.println(this + " " + currentCell.getAroundPheromonesFood() + nextCell.getPheromoneFood());
                 while(i < phersFood.size() &&  (nextCell == null)) {
                     int maxpheromoneFood = phersFood.get(i);
                     nextCell = pickIn(currentCell.getFoodCells(maxpheromoneFood));
@@ -130,7 +129,6 @@ public class AntNode extends CellLocatedNode {
                 ArrayList<Integer> phersQueen = currentCell.getAroundPheromonesQueen();
                 Collections.sort(phersQueen,Collections.reverseOrder());
                 nextCell = pickIn(currentCell.getQueenCells(phersQueen.get(0)));
-                System.out.println();
                 while(i < phersQueen.size() &&  (nextCell == null)) {
                     int maxpheromoneQueen = phersQueen.get(i);
                     nextCell = pickIn(currentCell.getQueenCells(maxpheromoneQueen));
@@ -157,9 +155,9 @@ public class AntNode extends CellLocatedNode {
     }
 
     protected Cell pickIn(ArrayList<Cell> cells){
-        int a = (int) (Math.floor(Math.random() * cells.size()));
-        while(cells.size() > 0 && (cells.get(a) == currentCell || cells.get(a) == lastCell || cells.get(a) == null)) {
-            a = (int) (Math.floor(Math.random() * cells.size()));
+        int a = (int) (Math.floor(Math.random() * (cells.size()-1)));
+        while(cells.size() > 0 && (cells.get(a) == null || cells.get(a) == currentCell ||cells.get(a) == lastCell )) {
+            a = (int) (Math.floor(Math.random() * (cells.size()-1)));
             cells.remove(a);
         }
         if(cells.size() == 0) {

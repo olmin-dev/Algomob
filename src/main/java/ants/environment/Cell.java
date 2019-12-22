@@ -14,6 +14,7 @@ public class Cell extends Point {
     public static final int MIN_COST_VALUE = 1;
     private int cost;
     private boolean is_obstacle;
+    private int id;
 
     private int PV;
     private ArrayList<Integer> pheromones;
@@ -30,17 +31,11 @@ public class Cell extends Point {
         return a;
     }
 
-    public boolean isPheromoneQueen(){
-        return pheromones.get(0) == 0;
-    }
-
-    public boolean isPheromoneFood(){
-        return pheromones.get(1) == 0;
-    }
-
     public int getPheromoneQueen() { return pheromones.get(0);}
 
     public int getPheromoneFood() { return pheromones.get(1);}
+
+    public int getId(){return id;}
 
     public ArrayList<Integer> getAroundPheromonesFood(){
         ArrayList<Integer> pheromones = new ArrayList<>();
@@ -130,9 +125,10 @@ public class Cell extends Point {
     }
 
 
-    public Cell(Point location){
+    public Cell(Point location, int idCell){
         super(location);
         double rand = Math.random();
+        id = idCell;
         is_obstacle = false;
         pheromones = new ArrayList<Integer>();
         Random r = new Random();
@@ -245,19 +241,6 @@ public class Cell extends Point {
         cost--;
         if(cost < MIN_COST_VALUE)
             cost = MIN_COST_VALUE;
-    }
-
-    public Cell getLocation(Point current) {
-        if (current == (Point) this) return this;
-        if (current == (Point) this.getBottomNeighbor()) return this.getBottomNeighbor();
-        if (current == (Point) this.getBottomLeftNeighbor()) return this.getBottomLeftNeighbor();
-        if (current == (Point) this.getLeftNeighbor()) return this.getLeftNeighbor();
-        if (current == (Point) this.getTopLeftNeighbor()) return this.getTopLeftNeighbor();
-        if (current == (Point) this.getTopNeighbor()) return this.getTopNeighbor();
-        if (current == (Point) this.getTopRightNeighbor()) return this.getTopRightNeighbor();
-        if (current == (Point) this.getRightNeighbor()) return this.getRightNeighbor();
-        if (current == (Point) this.getBottomRightNeighbor()) return this.getBottomRightNeighbor();
-        return new Cell(new Point(-1, -1));
     }
 
 }
