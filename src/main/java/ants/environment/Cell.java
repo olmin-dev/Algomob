@@ -84,43 +84,19 @@ public class Cell extends Point {
         return ret;
     }
 
-    public ArrayList<Cell> getQueenCells(){
+    public ArrayList<Cell> getQueenCells(int maxQueenPher){
         ArrayList<Cell> ret = new ArrayList<>();
-        int maxQueenPher = 0;
-        if(getRightNeighbor() != null && getRightNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getRightNeighbor().getPheromoneQueen();
-        if(getBottomRightNeighbor() != null && getBottomRightNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getBottomRightNeighbor().getPheromoneQueen();
-        if(getBottomNeighbor() != null && getBottomNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getBottomNeighbor().getPheromoneQueen();
-        if(getBottomLeftNeighbor() != null && getBottomLeftNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getBottomLeftNeighbor().getPheromoneQueen();
-        if(getLeftNeighbor() != null && getLeftNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getLeftNeighbor().getPheromoneQueen();
-        if(getTopLeftNeighbor() != null && getTopLeftNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getTopLeftNeighbor().getPheromoneQueen();
-        if(getTopNeighbor() != null && getTopNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getTopNeighbor().getPheromoneQueen();
-        if(getTopRightNeighbor() != null && getTopRightNeighbor().getPheromoneQueen() > maxQueenPher)  maxQueenPher = getTopRightNeighbor().getPheromoneQueen();
-        if(getRightNeighbor() != null && getRightNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getRightNeighbor());
-        if(getBottomRightNeighbor() != null && getBottomRightNeighbor().getPheromoneQueen() == maxQueenPher) ret.add(getBottomRightNeighbor());
-        if(getBottomNeighbor() != null && getBottomNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getBottomNeighbor());
-        if(getBottomLeftNeighbor() != null && getBottomLeftNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getBottomLeftNeighbor());
-        if(getLeftNeighbor() != null && getLeftNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getLeftNeighbor());
-        if(getTopLeftNeighbor() != null && getTopLeftNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getTopLeftNeighbor());
-        if(getTopNeighbor() != null && getTopNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getTopNeighbor());
-        if(getTopRightNeighbor() != null && getTopRightNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getTopRightNeighbor());
+        if(getRightNeighbor() != null && getRightNeighbor().getPheromoneQueen() > maxQueenPher)  ret.add(getRightNeighbor());
+        if(getBottomRightNeighbor() != null && getBottomRightNeighbor().getPheromoneQueen() > maxQueenPher)  ret.add(getBottomRightNeighbor());
+        if(getBottomNeighbor() != null && getBottomNeighbor().getPheromoneQueen() > maxQueenPher)  ret.add(getBottomNeighbor());
+        if(getBottomLeftNeighbor() != null && getBottomLeftNeighbor().getPheromoneQueen() > maxQueenPher)  ret.add(getBottomLeftNeighbor());
+        if(getLeftNeighbor() != null && getLeftNeighbor().getPheromoneQueen() > maxQueenPher)  ret.add(getLeftNeighbor());
+        if(getTopLeftNeighbor() != null && getTopLeftNeighbor().getPheromoneQueen() > maxQueenPher)  ret.add(getTopLeftNeighbor());
+        if(getTopNeighbor() != null && getTopNeighbor().getPheromoneQueen() > maxQueenPher) ret.add(getTopNeighbor());
+        if(getTopRightNeighbor() != null && getTopRightNeighbor().getPheromoneQueen() > maxQueenPher) ret.add(getTopRightNeighbor());
         return ret;
     }
 
-    public ArrayList<Cell> getExploredCells(int maxQueenPher){
-        ArrayList<Cell> ret = new ArrayList<>();
-
-        if(getRightNeighbor() != null && getRightNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getRightNeighbor());
-        if(getBottomRightNeighbor() != null && getBottomRightNeighbor().getPheromoneQueen() == maxQueenPher) ret.add(getBottomRightNeighbor());
-        if(getBottomNeighbor() != null && getBottomNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getBottomNeighbor());
-        if(getBottomLeftNeighbor() != null && getBottomLeftNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getBottomLeftNeighbor());
-        if(getLeftNeighbor() != null && getLeftNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getLeftNeighbor());
-        if(getTopLeftNeighbor() != null && getTopLeftNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getTopLeftNeighbor());
-        if(getTopNeighbor() != null && getTopNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getTopNeighbor());
-        if(getTopRightNeighbor() != null && getTopRightNeighbor().getPheromoneQueen() == maxQueenPher)  ret.add(getTopRightNeighbor());
-
-
-        return ret;
-    }
 
     public int getPV() {
         return PV;

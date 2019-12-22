@@ -115,7 +115,7 @@ public class AntNode extends CellLocatedNode {
                 ArrayList<Integer> phersFood = currentCell.getAroundPheromonesFood();
                 Collections.sort(phersFood, Collections.reverseOrder());
                 nextCell = pickIn(currentCell.getFoodCells(0));
-                while(nextCell == null || (i < phersFood.size() && (nextCell == lastCell || nextCell.getIs_obstacle()))) {
+                while(i < phersFood.size() &&  (nextCell == null || (nextCell == lastCell || nextCell.getIs_obstacle()))) {
                     int maxpheromoneFood = phersFood.get(i);
                     nextCell = pickIn(currentCell.getFoodCells(maxpheromoneFood));
                     i++;
@@ -124,9 +124,9 @@ public class AntNode extends CellLocatedNode {
                 i = 0;
                 ArrayList<Integer> phersQueen = currentCell.getAroundPheromonesQueen();
                 Collections.sort(phersQueen,Collections.reverseOrder());
-                while(nextCell == null || (i < phersQueen.size() && (nextCell == lastCell || nextCell.getIs_obstacle()))) {
+                while(i < phersQueen.size() &&  (nextCell == null || (nextCell == lastCell || nextCell.getIs_obstacle()))) {
                     int maxpheromoneQueen = phersQueen.get(i);
-                    nextCell = pickIn(currentCell.getExploredCells(maxpheromoneQueen));
+                    nextCell = pickIn(currentCell.getQueenCells(maxpheromoneQueen));
                     i++;
                 }
             }
