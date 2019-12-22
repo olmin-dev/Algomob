@@ -54,7 +54,7 @@ public class QueenNode extends CellLocatedNode {
 
         if(foodStock <= 0) {
             die();
-            return;
+            System.exit(0);
         }
 
         AntNode babyAnt = new AntNode();
