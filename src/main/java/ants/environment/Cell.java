@@ -127,12 +127,6 @@ public class Cell extends Point {
         } else if (somme < 100){
                 pheromones.set(type, pheromones.get(type) + 10);
             }
-        if (type ==  0) {
-            //System.out.println("La reine est là, vive la reine : " + pheromones.get(0) + ",autre :" + pheromones.get(1));
-        }
-        if (type == 1) {
-            //System.out.println("Omnomnomnomnom : " + pheromones.get(1) + ",autre :" + pheromones.get(0));
-        }
     }
 
 

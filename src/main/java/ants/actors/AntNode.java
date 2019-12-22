@@ -18,6 +18,7 @@ public class AntNode extends CellLocatedNode {
     private boolean isDigging = false;
     private int pheromoneBehaviour;
     private Cell lastCell;
+    private Cell nextCell;
 
     public AntNode(){
         super();
@@ -71,7 +72,9 @@ public class AntNode extends CellLocatedNode {
     @Override
     public void onArrival() {
         arrived = true;
-        setCurrentCell(getDestinations().element());
+        setCurrentCell(this.nextCell);
+        nextCell = null;
+        //setCurrentCell(getDestinations().element());
         currentCell.addPheromones(pheromoneBehaviour);
         super.onArrival();
     }
@@ -86,6 +89,7 @@ public class AntNode extends CellLocatedNode {
             }
         }
         Cell cell = searchWay();
+        nextCell = cell;
         addDestination(cell);
         arrived = false;
     }
@@ -96,6 +100,7 @@ public class AntNode extends CellLocatedNode {
         if(arrived) {
             //Cell cell = pickNeighBoringCell();
             Cell cell = searchWay();
+            nextCell = cell;
             addDestination(cell);
             arrived = false;
         }
@@ -110,18 +115,18 @@ public class AntNode extends CellLocatedNode {
         Cell nextCell = null;
         int i;
         while(nextCell == null) {
+            i = 1;
             if(!carry) {
-                i = 1;
                 ArrayList<Integer> phersFood = currentCell.getAroundPheromonesFood();
                 Collections.sort(phersFood,Collections.reverseOrder());
                 nextCell = pickIn(currentCell.getFoodCells(phersFood.get(0)));
+                System.out.println(this + " " + currentCell.getAroundPheromonesFood() + nextCell.getPheromoneFood());
                 while(i < phersFood.size() &&  (nextCell == null)) {
                     int maxpheromoneFood = phersFood.get(i);
                     nextCell = pickIn(currentCell.getFoodCells(maxpheromoneFood));
                     i++;
                 }
             } else {
-                i = 1;
                 ArrayList<Integer> phersQueen = currentCell.getAroundPheromonesQueen();
                 Collections.sort(phersQueen,Collections.reverseOrder());
                 nextCell = pickIn(currentCell.getQueenCells(phersQueen.get(0)));
@@ -147,6 +152,7 @@ public class AntNode extends CellLocatedNode {
                 setIcon("/images/ant_dig.png");
             }
         }
+        this.nextCell = nextCell;
         return nextCell;
     }
 
@@ -202,6 +208,7 @@ public class AntNode extends CellLocatedNode {
             isDigging = true;
             setIcon("/images/ant_dig.png");
         }
+        this.nextCell = nextCell;
         return nextCell;
     }
 
