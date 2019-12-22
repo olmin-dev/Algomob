@@ -8,6 +8,8 @@ import java.util.Random;
 public class QueenNode extends CellLocatedNode {
 
     private int foodStock;
+    private int lifetime;
+
 
     public void increaseFoodStock(){
         foodStock++;
@@ -17,6 +19,7 @@ public class QueenNode extends CellLocatedNode {
     public QueenNode(){
         super();
         foodStock = 100;
+        lifetime = 0;
         setIcon("/images/ant-queen.png");
         setIconSize(getIconSize()*2);
     }
@@ -24,6 +27,7 @@ public class QueenNode extends CellLocatedNode {
     @Override
     public void onClock() {
         currentCell.addPheromones(0);
+        lifetime ++;
         if (shouldProduceOffspring())
             produceOffspring();
 
