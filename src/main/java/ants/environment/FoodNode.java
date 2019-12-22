@@ -28,7 +28,7 @@ public class FoodNode extends CellLocatedNode {
 
         super.onPostClock();
         lifetime --;
-        if (lifetime <= 0){
+        if (lifetime <= 0 || quantity <= 0){
             die();
         }
     }
@@ -51,7 +51,7 @@ public class FoodNode extends CellLocatedNode {
         return quantity;
     }
 
-    public void decreaseQuantity() {
+    public synchronized void decreaseQuantity() {
         quantity--;
         if (quantity == 0) {
             die();

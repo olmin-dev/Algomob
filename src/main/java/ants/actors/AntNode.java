@@ -71,7 +71,7 @@ public class AntNode extends CellLocatedNode {
     @Override
     public void onArrival() {
         arrived = true;
-        setCurrentCell((Cell) getDestinations().element());
+        setCurrentCell(getDestinations().element());
         currentCell.addPheromones(pheromoneBehaviour);
         super.onArrival();
     }
@@ -110,21 +110,23 @@ public class AntNode extends CellLocatedNode {
         Cell nextCell = null;
         int i;
         while(nextCell == null) {
-            if(pheromoneBehaviour == 0) {
-                i = 0;
+            if(!carry) {
+                i = 1;
                 ArrayList<Integer> phersFood = currentCell.getAroundPheromonesFood();
-                Collections.sort(phersFood, Collections.reverseOrder());
-                nextCell = pickIn(currentCell.getFoodCells(0));
-                while(i < phersFood.size() &&  (nextCell == null || (nextCell == lastCell || nextCell.getIs_obstacle()))) {
+                Collections.sort(phersFood,Collections.reverseOrder());
+                nextCell = pickIn(currentCell.getFoodCells(phersFood.get(0)));
+                while(i < phersFood.size() &&  (nextCell == null)) {
                     int maxpheromoneFood = phersFood.get(i);
                     nextCell = pickIn(currentCell.getFoodCells(maxpheromoneFood));
                     i++;
                 }
             } else {
-                i = 0;
+                i = 1;
                 ArrayList<Integer> phersQueen = currentCell.getAroundPheromonesQueen();
                 Collections.sort(phersQueen,Collections.reverseOrder());
-                while(i < phersQueen.size() &&  (nextCell == null || (nextCell == lastCell || nextCell.getIs_obstacle()))) {
+                nextCell = pickIn(currentCell.getQueenCells(phersQueen.get(0)));
+                System.out.println();
+                while(i < phersQueen.size() &&  (nextCell == null)) {
                     int maxpheromoneQueen = phersQueen.get(i);
                     nextCell = pickIn(currentCell.getQueenCells(maxpheromoneQueen));
                     i++;
@@ -136,21 +138,25 @@ public class AntNode extends CellLocatedNode {
             }
         }
         if(nextCell.getCost() > Cell.MIN_COST_VALUE) {
-            diggingCell = nextCell;
-            isDigging = true;
-            setIcon("/images/ant_dig.png");
+            double a = (Math.random());
+            if(a > 0.1){
+                nextCell = searchWay();
+            } else {
+                diggingCell = nextCell;
+                isDigging = true;
+                setIcon("/images/ant_dig.png");
+            }
         }
         return nextCell;
     }
 
     protected Cell pickIn(ArrayList<Cell> cells){
         int a = (int) (Math.floor(Math.random() * cells.size()));
-        int size = cells.size();
-        while(size > 0 && (cells.get(a).getIs_obstacle() || cells.get(a) == lastCell)) {
+        while(cells.size() > 0 && (cells.get(a) == currentCell || cells.get(a) == lastCell || cells.get(a) == null)) {
             a = (int) (Math.floor(Math.random() * cells.size()));
-             size --;
+            cells.remove(a);
         }
-        if(size == 0) {
+        if(cells.size() == 0) {
             return null;
         }else {
             return cells.get(a);
@@ -163,7 +169,6 @@ public class AntNode extends CellLocatedNode {
         while(nextCell == null || nextCell.getIs_obstacle() || nextCell == lastCell) {
             Random r = new Random();
             a = (int) (r.nextInt(8));
-            //System.out.println(a+" " + nextCell);
 
             switch (a) {
                     case 0:
@@ -204,7 +209,7 @@ public class AntNode extends CellLocatedNode {
         List<Node>  Nb = getSensedNodes();
         for(int i = 0; i < Nb.size(); i++){
             Node currentNb = Nb.get(i);
-            if(currentNb.getIcon() == "/images/ant-worm.png" && distance(currentNb) < 10){
+            if(currentNb.getIcon() == "/images/ant-worm.png" && distance(currentNb) < 1){
                 System.out.println("Miam miam pour la reine !");
                 FoodNode food = (FoodNode) currentNb;
                 food.decreaseQuantity();

@@ -4,10 +4,11 @@ import io.jbotsim.core.Node;
 import io.jbotsim.core.Point;
 import java.util.LinkedList;
 import java.util.Queue;
+import ants.environment.Cell;
 
 public class WayPointNode extends Node{
     private double speed = 1; // Number of units to be moved in each step.
-    private Queue<Point> destinations = new LinkedList<Point>();
+    private Queue<Cell> destinations = new LinkedList<Cell>();
 
     public double getSpeed() {
         return speed;
@@ -17,15 +18,15 @@ public class WayPointNode extends Node{
         this.speed = speed;
     }
 
-    public Queue<Point> getDestinations() {
+    public Queue<Cell> getDestinations() {
         return destinations;
     }
 
-    public void setDestinations(Queue<Point> destinations) {
+    public void setDestinations(Queue<Cell> destinations) {
         this.destinations = destinations;
     }
 
-    public void addDestination(Point added) {
+    public void addDestination(Cell added) {
         destinations.add(added);
     }
 

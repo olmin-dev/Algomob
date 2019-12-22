@@ -54,8 +54,8 @@ public class Environment implements ClockListener {
         gridStartLocation = new Point(gridStartX, gridStartY);
 
         createCells(elementWidth, elementHeight);
-        initializeObstacle(50, tp);
-        initializeFood(10, tp);
+        initializeObstacle(0, tp);
+        initializeFood(20, tp);
         updateNeighborhood();
         initializeQueen(tp);
     }
